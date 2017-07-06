@@ -67,7 +67,7 @@ vue-waterfall-easy(:imgsArr="imgsArr",@scrollLoadImg="fetchImgsData")
     p.some-info {{props.value.info}}
 ```
 ### 参数说明
-事件名 | 描述
+参数 | 描述
 ---|---
 props.index | 图片在数组中的索引，从0开始
 props.value | 遍历参数imgsArr的元素值
