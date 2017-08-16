@@ -27,7 +27,7 @@ export default {
     initImgsArr(n, m) { //num 图片数量
       var arr = []
       for (var i = n; i < m; i++) {
-        arr.push({ src: `static/img/${i + 1}.jpg`, info: '一些图片描述文字' })
+        arr.push({ src: `static/img/${i + 1}.jpg`, link:'https://www.baidu.com',info: '一些图片描述文字' })
       }
       return arr
     },

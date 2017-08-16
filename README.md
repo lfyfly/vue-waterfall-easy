@@ -37,6 +37,10 @@ props: {
     type: Number,
     default: 20
   },
+  maxCols: { // 最大的列数
+    type: Number,
+    default: 5
+  },
   imgsArr: { // 请求返回的图片数据，格式：[{src:'1.jpg',info:'自定义图片信息'},{src:'2.jpg',info:'自定义图片信息'}...]
     type: Array,
     required: true
@@ -80,7 +84,8 @@ props.value | 遍历参数imgsArr的元素值
 ```
 
 ## 关于数据请求的约定
-**新请求返回的数据与原来的数据进行合并**
+1. 参数imgsArr的元素包含这两个属性 src link，src为图片地址，link为点击跳转地址
+2. **新请求返回的数据与原来的数据进行合并**
 详情见仓库 App.vue文件
 ```js
 this.imgsArr = this.imgsArr.concat(this.fetchImgsArr)

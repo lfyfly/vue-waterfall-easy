@@ -4,8 +4,8 @@
   position: absolute;
   width: 100%; // 移动端生效
   .img-box {
-    display: inline-block;
     width: 50%; // 移动端生效
+
     box-sizing: border-box;
     float: left; // 首行排版
     transition: left 1s, top 1s;
@@ -76,12 +76,11 @@
 <!-- —————————————↓HTML————————分界线———————————————————————— -->
 <template lang="pug">
 .vue-waterfall-easy(
-  :style="isMobile? '':{width:colWidth*columnCount+'px',left:'50%',marginLeft: -1*colWidth*columnCount/2 +'px'}"
+  :style="isMobile? '':{width:boxWidth*columnCount+'px',left:'50%',marginLeft: -1*boxWidth*columnCount/2 +'px'}"
 )
-  a.img-box(
+  .img-box(
     v-for="(v,i) in imgsArrC",
-    :href="v.link",
-    :style="{padding:gap/2+'px',width: isMobile ? '' : colWidth+'px'}"
+    :style="{padding:gap/2+'px',width: isMobile ? '' : boxWidth+'px'}"
   )
     .img-inner-box
       div.img-wraper(:style="{width:imgWidthC+'px',height:v.height?v.height+'px':''}")
@@ -107,10 +106,6 @@ export default {
       type: Number,
       default: 20
     },
-    maxCols: {
-      type: Number,
-      default: 5
-    },
     imgsArr: {
       type: Array,
       required: true
@@ -127,24 +122,23 @@ export default {
   data() {
     return {
       msg: 'this is from vue-waterfall-easy.vue',
-      columnCount: NaN, // 列数，根据窗口大小初始化
-      isMobile: navigator.userAgent.match(/(iPhone|iPod|Android|ios)/i), // 初始化移动端
-      beginIndex: NaN, // 第二列首张图片的index，从这一张开始重新计算图片位置
-
-      colsHeightArr: [], // 每一列的图片总和高度为元素组成的数组
+      colsHeightArr: [],
       imgBoxEls: null, // 所有的.img-box元素
+      columnCount: NaN, // 列数，根据窗口大小初始化
+      isMobile: false, // 移动端判断
+      beginIndex: NaN,
       isPreloading: true, // 预加载状态中（1.以等待图片替换 2.图片全部预加载完显示）
       isPreloadingC: true,
-      imgsArrC: [], // 预加载完之后再才开始
+      imgsArrC: [], // 预加载完之后再
       loadedCount: 0, // 已经加载图片数量
       isFirstTIme: true, // 首次加载
     }
   },
   computed: {
-    colWidth() { // 每一列的宽度
+    boxWidth() {
       return this.imgWidth + this.gap
     },
-    imgWidthC() { // 对于移动端重新计算图片宽度
+    imgWidthC() {
       return this.isMobile ? window.innerWidth / 2 - this.gap : this.imgWidth
     }
   },
@@ -152,22 +146,29 @@ export default {
     waterfall() { // 执行瀑布布局
       for (var i = this.beginIndex; i < this.imgsArr.length; i++) {
         var minHeight = Math.min.apply(null, this.colsHeightArr) // 最低高低
+        // alert(this.colsHeightArr)
         var minIndex = this.colsHeightArr.indexOf(minHeight) // 最低高度的索引
+        // console.log(this.colsHeightArr, minHeight, minIndex)
         var width = this.imgBoxEls[0].offsetWidth // 图片的宽度获取
         // 设置元素定位的位置
+        // console.log(this.imgBoxEls[i],i)
         this.imgBoxEls[i].style.position = 'absolute'
         this.imgBoxEls[i].style.left = minIndex * width + 'px'
         this.imgBoxEls[i].style.top = minHeight + 'px'
 
         // 更新colsHeightArr
+        // console.log(this.imgsArr, this.imgsArr[i].height, i)
+        // var height = Math.round(this.imgBoxEls[i].getElementsByClassName('img-info')[0].offsetHeight + this.imgsArr[i].height + this.gap)
         this.$set(this.colsHeightArr, minIndex, minHeight + this.imgBoxEls[i].offsetHeight)
       }
       this.beginIndex = this.imgsArr.length
+      // console.log(this.colsHeightArr)
     },
 
-    loadFn(e, oImg, i) { // 每张图片预加载完成执行函数
+    loadFn(e, oImg, i) {
       this.loadedCount++
       if (e.type === 'load') { // 使用图片原始宽度计算图片的高度
+        // var imgWidth = this.isMobile ? window.innerWidth / 2-this.gap : this.imgWidth
         this.$set(this.imgsArr[i], 'height', Math.round(this.imgWidthC / (oImg.width / oImg.height)))
       }
       if (this.loadedCount === this.imgsArr.length) {
@@ -188,7 +189,6 @@ export default {
     preload() {
       this.imgsArr.forEach((v, i) => {
         if (i < this.loadedCount) return
-
         var oImg = new Image()
         oImg.addEventListener('load', (e) => {
           this.loadFn(e, oImg, i)
@@ -201,7 +201,7 @@ export default {
     // -----------------初始化化------------------------
 
     initColsHeightArr() { // 第一行元素的高度组成的数组-初始化
-      this.colsHeightArr = [] // 列数发生变化重新初始化
+      this.colsHeightArr = [] // 列数发生变化
       for (var i = 0; i < this.columnCount; i++) {
         this.imgBoxEls[i].style.position = 'static' // 重置下position
         var height = this.imgBoxEls[i].offsetHeight
@@ -211,24 +211,31 @@ export default {
     initImgBoxEls() { // 初始化所有装图片的元素集合,注意高度获取需要在图片加载完成之后，所以在window.onload 事件中初始化
       this.imgBoxEls = document.getElementsByClassName('img-box')
     },
-
+    initIsMobile() { // 移动端初始化
+      if (navigator.userAgent.match(/(iPhone|iPod|Android|ios)/i)) this.isMobile = true
+    },
     initColumnCount() { // 列数初始化
-
       var winWidth = window.innerWidth
-      var columnCount = parseInt(winWidth / this.colWidth)
-      columnCount = columnCount === 0 ? 1 : columnCount
-      this.columnCount = this.isMobile
-        ? 2
-        : (columnCount > this.maxCols ? this.maxCols : columnCount)
+      if (winWidth > this.boxWidth * 5) {
+        this.columnCount = 5
+      } else if (winWidth > this.boxWidth * 4) {
+        this.columnCount = 4
+      } else if (winWidth > this.boxWidth * 3) {
+        this.columnCount = 3
+      } else if (winWidth > this.boxWidth * 2) {
+        this.columnCount = 2
+      } else {
+        this.columnCount = this.isMobile ? 2 : 1
+      }
       this.beginIndex = this.columnCount // 开始排列的元素索引
 
     },
   },
   mounted() {
-    // ==1== 根据窗口大小初始化列数
+    // 初始化
+    this.initIsMobile()
     this.initColumnCount()
 
-    // ==2== 根据预加载完成的图片的长宽比，计算图片的高度
     this.preload()
 
     this.$on('preloaded', () => {
@@ -237,11 +244,8 @@ export default {
     })
 
     window.addEventListener('resize', () => {
-      var old = this.columnCount
       this.initColumnCount()
-      if (old === this.columnCount) return // 列数不变直接退出
       this.initColsHeightArr()
-
       this.waterfall()
     })
 
