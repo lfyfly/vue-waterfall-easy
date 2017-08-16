@@ -1,6 +1,6 @@
 {
   "name": "vue-waterfall-easy",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "vue-waterfall-easy",
   "author": "lfyfly <410793635@qq.com>",
   "main": "./src/components/vue-waterfall-easy.vue",
