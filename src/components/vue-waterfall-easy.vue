@@ -220,13 +220,13 @@ export default {
       this.columnCount = this.isMobile
         ? 2
         : (columnCount > this.maxCols ? this.maxCols : columnCount)
-      this.beginIndex = this.columnCount // 开始排列的元素索引
 
     },
   },
   mounted() {
     // ==1== 根据窗口大小初始化列数
     this.initColumnCount()
+    this.beginIndex = this.columnCount // 开始排列的元素索引
 
     // ==2== 根据预加载完成的图片的长宽比，计算图片的高度
     this.preload()
@@ -240,9 +240,12 @@ export default {
       var old = this.columnCount
       this.initColumnCount()
       if (old === this.columnCount) return // 列数不变直接退出
-      this.initColsHeightArr()
+      this.beginIndex = this.columnCount // 开始排列的元素索引
 
+      this.initColsHeightArr()
       this.waterfall()
+
+
     })
 
     window.addEventListener('scroll', () => {
