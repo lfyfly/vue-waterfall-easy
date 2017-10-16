@@ -5,7 +5,7 @@
 4. 响应式，兼容移动端
 5. 使用及其简单
 
-# [DEMO](https://lfyfly.github.io/vue-waterfall-easy/)
+# [DEMO](http://lfyfly.gitee.io/vue-waterfall-easy/docs/)
 **案例代码：请查看仓库目录 src/App.vue**
 # 支持vue2.1+
 # [GITHUB](https://github.com/lfyfly/vue-waterfall-easy)
