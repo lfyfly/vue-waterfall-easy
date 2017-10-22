@@ -250,7 +250,8 @@ export default {
 
     window.addEventListener('scroll', () => {
       if (this.isPreloading) return
-      if (document.body.scrollTop + window.innerHeight > document.body.scrollHeight - 30) {
+      const lastImgHeight = this.imgsArr[this.imgsArr.length - 1].height
+      if (document.body.scrollTop + window.innerHeight > document.body.scrollHeight - lastImgHeight) {
         this.$emit('scrollLoadImg')
 
       }

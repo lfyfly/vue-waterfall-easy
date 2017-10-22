@@ -1,6 +1,5 @@
 <template lang="pug">
  #app
-  h1.title vue-waterfall-easy demo
   vue-waterfall-easy(:imgsArr="imgsArr",@scrollLoadImg="fetchImgsData")
     template( scope="props")
       p.some-info 第{{props.index+1}}张图片
@@ -27,7 +26,7 @@ export default {
     initImgsArr(n, m) { //num 图片数量
       var arr = []
       for (var i = n; i < m; i++) {
-        arr.push({ src: `static/img/${i + 1}.jpg`, link:'https://www.baidu.com',info: '一些图片描述文字' })
+        arr.push({ src: `./static/img/${i + 1}.jpg`, link:'https://www.baidu.com',info: '一些图片描述文字' })
       }
       return arr
     },
@@ -53,24 +52,9 @@ export default {
 
 #app {
   font-family: microsoft yahei;
-
   .some-info {
     line-height: 1.6;
     text-align: center;
-  }
-  .title {
-    background: #000;
-    color: #ccc;
-    text-align: center;
-    font-size: 24px;
-    line-height: 40px;
-    width: 100%;
-    position: fixed;
-    top: 0;
-    z-index: 999;
-  }
-  .vue-waterfall-easy {
-    top: 40px;
   }
 }
 </style>
