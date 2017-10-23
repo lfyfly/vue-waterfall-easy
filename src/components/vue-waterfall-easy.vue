@@ -1,7 +1,7 @@
 <!-- —————————————↓SCSS———————分界线————————————————————————— -->
 <style lang="scss">
 .vue-waterfall-easy {
-  position: absolute;
+  position: relative;
   width: 100%; // 移动端生效
   .img-box {
     display: inline-block;
@@ -247,11 +247,15 @@ export default {
 
 
     })
+    console.log(this.$el.parentNode)
+      console.log(this.$el.parentNode, this.$el.parentNode.scrollTop + this.$el.parentNode.offsetHeight, this.$el.parentNode.scrollHeight)
 
-    window.addEventListener('scroll', () => {
+    this.$el.parentNode.addEventListener('scroll', () => {
       if (this.isPreloading) return
       const lastImgHeight = this.imgsArr[this.imgsArr.length - 1].height
-      if (document.body.scrollTop + window.innerHeight > document.body.scrollHeight - lastImgHeight) {
+      console.log(this.$el.parentNode, this.$el.parentNode.scrollTop + this.$el.parentNode.offsetHeight, this.$el.parentNode.scrollHeight)
+
+      if (this.$el.parentNode.scrollTop + this.$el.parentNode.offsetHeight > this.$el.parentNode.scrollHeight - lastImgHeight) {
         this.$emit('scrollLoadImg')
 
       }
