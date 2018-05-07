@@ -1,13 +1,14 @@
 <template lang="pug">
 #app
-  vue-waterfall-easy(:imgsArr="imgsArr",@scrollLoadImg="fetchImgsData")
+  vue-waterfall-easy(:imgsArr="imgsArr",@scrollReachBottom="fetchImgsData")
     template( scope="props")
-      p.some-info 第{{props.index+1}}张图片
-      p.some-info {{props.value.info}}
+      .img-info
+        p.some-info 第{{props.index+1}}张图片
+        p.some-info {{props.value.info}}
 </template>
 
 <script>
-import vueWaterfallEasy from 'components/vue-waterfall-easy.vue'
+import vueWaterfallEasy from './vue-waterfall-easy/vue-waterfall-easy.vue'
 
 export default {
   name: 'app',
@@ -56,9 +57,8 @@ body,
 }
 
 #app {
-  font-family: microsoft yahei;
   overflow: auto;
-
+  position: relative;
   .some-info {
     line-height: 1.6;
     text-align: center;

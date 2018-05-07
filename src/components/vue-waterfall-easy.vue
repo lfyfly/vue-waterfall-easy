@@ -257,7 +257,6 @@ export default {
 
       if (this.$el.parentNode.scrollTop + this.$el.parentNode.offsetHeight > this.$el.parentNode.scrollHeight - lastImgHeight) {
         this.$emit('scrollLoadImg')
-
       }
     })
 
