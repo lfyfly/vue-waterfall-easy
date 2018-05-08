@@ -39,7 +39,6 @@ export default {
   created() {
     this.getData()
   },
-
 }
 
 </script>
@@ -49,7 +48,13 @@ export default {
   margin: 0;
   padding: 0;
 }
-
+a {
+  color: #000;
+  text-decoration: none;
+  &:active {
+    color: #000;
+  }
+}
 html,
 body,
 #app {

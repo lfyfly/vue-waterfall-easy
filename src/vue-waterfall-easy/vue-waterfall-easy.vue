@@ -82,10 +82,15 @@
       slot(name="waterfall-head")
       a.img-box(
         v-for="(v,i) in imgsArr_c",
+        :href="linkRange=='card' ? v.href : 'javascript:void(0)' ",
+        target="_blank",
         :style="{padding:gap/2+'px', width: isMobile ? '' : colWidth+'px'}"
       )
         .img-inner-box
-          .img-wraper(:style="{width:imgWidth_c+'px',height:v.height?v.height+'px':''}")
+          a.img-wraper(
+            :href="linkRange=='img'||linkRange=='card' ? v.href : 'javascript:void(0)' ",
+            target="_blank",
+            :style="{width:imgWidth_c+'px',height:v.height?v.height+'px':''}")
             img(:src="v.src")
           slot(:index="i",:value="v")
 
@@ -98,10 +103,10 @@
 export default {
   name: 'vue-waterfall-easy',
   props: {
-    width: {
+    width: { // 容器宽度
       type: Number
     },
-    height: {
+    height: { // 容器高度
       type: Number
     },
     reachBottomDistance: { // 滚动触底距离，触发加载新图片
@@ -126,11 +131,16 @@ export default {
     },
     imgsArr: {
       type: Array,
-      required: true
+      required: true,
+      default:[]
     },
     imgWidth: {
       type: Number,
       default: 240
+    },
+    linkRange:{ // card | img | custom 自定义通过slot自定义链接范围
+      type: String,
+      default:'card'
     },
     loadingTimeOut: { // 预加载事件小于500毫秒就不显示加载动画，增加用户体验
       type: Number,
