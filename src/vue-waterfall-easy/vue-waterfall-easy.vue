@@ -15,8 +15,7 @@
     position: absolute;
     width: 100%; // 移动端生效
     & > .img-box {
-      display: inline-block;
-      vertical-align: top;
+      position: absolute;
       box-sizing: border-box;
       transition: left 1s, top 1s;
       width: 50%; // 移动端生效
@@ -148,7 +147,7 @@ export default {
       loadedCount: 0,
       cols: NaN, // 需要根据窗口宽度初始化
       imgBoxEls: null, // 所有的.img-box元素
-      beginIndex: NaN, // 开始要排列的图片索引,首次为第二列的第一张图片，后续加载则为已经排列图片的下一个索引
+      beginIndex: 0, // 开始要排列的图片索引,首次为第二列的第一张图片，后续加载则为已经排列图片的下一个索引
       colsHeightArr: [],
       // 自定义loading
       LoadingTimer: null,
@@ -168,14 +167,11 @@ export default {
     }
   },
   mounted() {
-    // 除去滚动条宽度，让loading水平居中
-    var scrollEl = this.$el.querySelector('.vue-waterfall-easy-scroll')
-    var scrollbarWidth = scrollEl.offsetWidth - scrollEl.clientWidth
-    this.$el.querySelector('.loading').style.marginLeft =  -scrollbarWidth/2 +'px'
+
+    this.loadingMiddle()
 
     this.preload()
     this.cols = this.calcuCols()
-    this.beginIndex = this.cols // 开始排列的元素索引
     this.$on('preloaded', () => {
       this.isFirstLoad = false
 
@@ -237,31 +233,30 @@ export default {
     },
     // ==3== waterfall布局
     waterfall() {
-      if (this.colsHeightArr.length === 0) this.initColsHeightArr() // 第一次初始化
-
-      console.log(this.beginIndex, 'this.beginIndex', this.imgsArr.length)
+      console.log('waterfall')
+      var top, left, colWidth = this.isMobile ? this.imgBoxEls[0].offsetWidth : this.colWidth
+      if (this.beginIndex == 0) this.colsHeightArr = []
       for (var i = this.beginIndex; i < this.imgsArr.length; i++) {
-        var minHeight = Math.min.apply(null, this.colsHeightArr) // 最低高低
-        var minIndex = this.colsHeightArr.indexOf(minHeight) // 最低高度的索引
-        var width = this.imgBoxEls[0].offsetWidth // 图片的宽度获取
-        // 设置元素定位的位置
-        this.imgBoxEls[i].style.position = 'absolute'
-        this.imgBoxEls[i].style.left = minIndex * width + 'px'
-        this.imgBoxEls[i].style.top = minHeight + 'px'
-
-        // 更新colsHeightArr
-        this.colsHeightArr[minIndex] = minHeight + this.imgBoxEls[i].offsetHeight
+        if (i < this.cols) {
+          var height = this.imgBoxEls[i].offsetHeight
+          this.colsHeightArr.push(height)
+          top = 0
+          left = i * colWidth
+        } else {
+          var minHeight = Math.min.apply(null, this.colsHeightArr) // 最低高低
+          var minIndex = this.colsHeightArr.indexOf(minHeight) // 最低高度的索引
+          top = minHeight
+          left = minIndex * colWidth
+          // 设置元素定位的位置
+          // 更新colsHeightArr
+          this.colsHeightArr[minIndex] = minHeight + this.imgBoxEls[i].offsetHeight
+        }
+        this.imgBoxEls[i].style.left = left + 'px'
+        this.imgBoxEls[i].style.top = top + 'px'
       }
+
       this.beginIndex = this.imgsArr.length // 排列完之后，新增图片从这个索引开始预加载图片和排列
 
-    },
-    initColsHeightArr() { // 第一行元素的高度组成的数组-初始化
-      this.colsHeightArr = [] // 列数发生变化重新初始化
-      for (var i = 0; i < this.cols; i++) {
-        this.imgBoxEls[i].style.position = 'static' // 重置下position
-        var height = this.imgBoxEls[i].offsetHeight
-        this.colsHeightArr.push(height)
-      }
     },
 
     // ==4== resize 响应式
@@ -270,9 +265,9 @@ export default {
         var old = this.cols
         this.cols = this.calcuCols()
         if (old === this.cols) return // 列数不变直接退出
-        this.beginIndex = this.cols // 开始排列的元素索引
-        this.initColsHeightArr()
+        this.beginIndex = 0 // 开始排列的元素索引
         this.waterfall()
+
       })
     },
 
@@ -290,6 +285,14 @@ export default {
           this.$emit('scrollReachBottom') // 滚动触底
         }
       })
+    },
+
+    // other
+    loadingMiddle() {
+      // 对滚动条宽度造成的不居中进行校正
+      var scrollEl = this.$el.querySelector('.vue-waterfall-easy-scroll')
+      var scrollbarWidth = scrollEl.offsetWidth - scrollEl.clientWidth
+      this.$el.querySelector('.loading').style.marginLeft = -scrollbarWidth / 2 + 'px'
     }
   }
 }

@@ -14,6 +14,7 @@
 </template>
 
 <script>
+// import vueWaterfallEasy from './vue-waterfall-easy/vue-waterfall-easy.vue'
 import vueWaterfallEasy from './vue-waterfall-easy/vue-waterfall-easy.vue'
 
 export default {
