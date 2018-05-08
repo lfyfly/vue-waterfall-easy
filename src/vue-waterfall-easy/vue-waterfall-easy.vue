@@ -26,33 +26,33 @@
   & > .loading {
     position: fixed;
     left: 50%;
-    bottom: 10px;
     transform: translateX(-50%);
-    bottom: 5px;
+    bottom: 6px;
     z-index: 999;
-    & > .dot {
-      display: inline-block;
-      width: 10px;
-      height: 10px;
+    @keyframes ball-beat {
+      50% {
+        opacity: 0.2;
+        transform: scale(0.75);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    &.ball-beat > .dot {
+      vertical-align: bottom;
+      background-color: #4b15ab;
+      width: 12px;
+      height: 12px;
       border-radius: 50%;
-      margin: 5px;
-      vertical-align: middle;
-      transition: width 0.3s, height 0.3s, opacity 0.3s;
+      margin: 3px;
+      animation-fill-mode: both;
+      display: inline-block;
+      animation: ball-beat 0.7s 0s infinite linear;
     }
-    .dot.s {
-      width: 7px;
-      height: 7px;
-      opacity: 0.3;
-    }
-    .dot.m {
-      width: 10px;
-      height: 10px;
-      opacity: 0.6;
-    }
-    .dot.l {
-      width: 13px;
-      height: 13px;
-      opacity: 0.9;
+    &.ball-beat > .dot:nth-child(2n-1) {
+      animation-delay: 0.35s;
     }
   }
 }
@@ -61,8 +61,9 @@
 <!-- —————————————↓HTML————————分界线———————————————————————— -->
 <template lang="pug">
 .vue-waterfall-easy(:style="isMobile? '' :{width: colWidth*cols+'px',left:'50%', marginLeft: -1*colWidth*cols/2 +'px'}")
-  .loading(v-if="isPreloading_c",:class="{first:isFirstLoad}")
-    span.dot(v-for="v in loadingStates[loadingState]",:class="v",:style="{background:loadingColor}")
+  .loading.ball-beat(v-if="isPreloading_c", :class="{first:isFirstLoad}")
+    slot(name="loading", :isFirstLoad="isFirstLoad")
+    .dot(v-if="!hasLoadingSlot", v-for="n in loadingDotCount",:style="loadingDotStyle")
   a.img-box(
     v-for="(v,i) in imgsArr_c",
     :style="{padding:gap/2+'px', width: isMobile ? '' : colWidth+'px'}"
@@ -86,11 +87,16 @@ export default {
       default: ''
     },
     reachBottomDistance: { // 滚动触底距离，触发加载新图片
+      type: Number, // selector
       default: 0  // 默认在最低那一列到底时触发
     },
-    loadingColor: {
-      type: String,
-      default: '#133adb'
+    loadingDotCount: { // loading 点数
+      type: Number,
+      default: 3
+    },
+    loadingDotStyle: {
+      type: Object,
+      default: null
     },
     gap: { // .img-box 间距
       type: Number,
@@ -127,8 +133,6 @@ export default {
       colsHeightArr: [],
       // 自定义loading
       LoadingTimer: null,
-      loadingStates: [['s', 'm', 'l'], ['m', 'l', 's'], ['l', 'm', 's']],
-      loadingState: 0,
       isFirstLoad: true, // 首次加载
     }
   },
@@ -138,10 +142,13 @@ export default {
     },
     imgWidth_c() { // 对于移动端重新计算图片宽度
       return this.isMobile ? window.innerWidth / 2 - this.gap : this.imgWidth
+    },
+    hasLoadingSlot(){
+      console.log(this.$scopedSlots)
+      return !!this.$scopedSlots.loading
     }
   },
   mounted() {
-    this.loadingAnimate()
 
     this.preload()
     this.cols = this.calcuCols()
@@ -168,10 +175,8 @@ export default {
           if (!this.isPreloading) return // 500毫秒内预加载完图片则不显示加载动画
           this.isPreloading_c = true
         }, this.loadingTimeOut)
-        this.loadingAnimate()
       } else {
         this.isPreloading_c = false
-        this.stopLoadingAnimate()
       }
     },
     imgsArr(newV, oldV) {
@@ -181,17 +186,6 @@ export default {
 
   },
   methods: {
-    // ==0== loading
-    loadingAnimate() {
-      this.LoadingTimer = setInterval(() => {
-        console.log('loading')
-        var nextState = this.loadingState + 1
-        this.loadingState = nextState == 3 ? nextState % 3 : nextState
-      }, 300)
-    },
-    stopLoadingAnimate() {
-      clearInterval(this.LoadingTimer)
-    },
     // ==1== 预加载
     preload(src, imgIndex) {
       this.imgsArr.forEach((imgItem, imgIndex) => {
