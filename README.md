@@ -28,7 +28,6 @@ export default {
     vueWaterfallEasy
   }
 }
-
 ```
 ## 组件参数
 ```js

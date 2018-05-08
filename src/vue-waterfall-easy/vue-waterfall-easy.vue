@@ -162,7 +162,6 @@ export default {
       return this.isMobile ? window.innerWidth / 2 - this.gap : this.imgWidth
     },
     hasLoadingSlot() {
-      console.log(this.$scopedSlots)
       return !!this.$scopedSlots.loading
     }
   },
@@ -179,7 +178,7 @@ export default {
       this.$nextTick(() => {
         this.isPreloading = false
         this.imgBoxEls = this.$el.getElementsByClassName('img-box')
-        console.log('图片总数', this.imgBoxEls.length)
+        // console.log('图片总数', this.imgBoxEls.length)
         this.waterfall()
       })
 
@@ -233,7 +232,7 @@ export default {
     },
     // ==3== waterfall布局
     waterfall() {
-      console.log('waterfall')
+      // console.log('waterfall')
       var top, left, colWidth = this.isMobile ? this.imgBoxEls[0].offsetWidth : this.colWidth
       if (this.beginIndex == 0) this.colsHeightArr = []
       for (var i = this.beginIndex; i < this.imgsArr.length; i++) {
@@ -281,7 +280,7 @@ export default {
         var minHeight = Math.min.apply(null, this.colsHeightArr)
         if (scrollEl.scrollTop + scrollEl.offsetHeight > minHeight - this.reachBottomDistance) {
           this.isPreloading = true
-          console.log('scrollReachBottom')
+          // console.log('scrollReachBottom')
           this.$emit('scrollReachBottom') // 滚动触底
         }
       })

@@ -1,7 +1,6 @@
 <template lang="pug">
 #app
-  //- vue-waterfall-easy( :imgsArr="imgsArr",@scrollReachBottom="fetchImgsData")
-  vue-waterfall-easy(:imgsArr="imgsArr",@scrollReachBottom="fetchImgsData")
+  vue-waterfall-easy(:imgsArr="imgsArr",@scrollReachBottom="getData")
     .img-info(slot-scope="props")
       p.some-info 第{{props.index+1}}张图片
       p.some-info {{props.value.info}}
@@ -15,37 +14,30 @@
 </template>
 
 <script>
-// import vueWaterfallEasy from './vue-waterfall-easy/vue-waterfall-easy.vue'
 import vueWaterfallEasy from './vue-waterfall-easy/vue-waterfall-easy.vue'
-
+import axios from 'axios'
 export default {
   name: 'app',
   data() {
     return {
       imgsArr: [],
-      fetchImgsArr: []
+      group: 0, // 当前加载的加载图片的次数
     }
   },
   components: {
     vueWaterfallEasy
   },
   methods: {
-    // 假数据
-    initImgsArr(n, m) { //num 图片数量
-      var arr = []
-      for (var i = n; i < m; i++) {
-        arr.push({ src: `./static/img/${i + 1}.jpg`, link: 'https://www.baidu.com', info: '一些图片描述文字' })
-      }
-      return arr
+    getData(group) { //
+      axios.get('./static/mock/data.json?group=' + this.group) // 真实环境中，后端会根据参数group返回新的图片数组，这里我用一个惊呆json文件模拟
+        .then(res => {
+          this.imgsArr = this.imgsArr.concat(res.data)
+          group++
+        })
     },
-
-    fetchImgsData() {
-      this.imgsArr = this.imgsArr.concat(this.fetchImgsArr)
-    }
   },
   created() {
-    this.imgsArr = this.initImgsArr(0, 10)
-    this.fetchImgsArr = this.initImgsArr(10, 20) // 模拟每次请求的新的图片的数据数据
+    this.getData()
   },
 
 }
