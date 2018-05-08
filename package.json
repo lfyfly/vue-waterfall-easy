@@ -6,7 +6,8 @@
   "main": "./src/components/vue-waterfall-easy.vue",
   "scripts": {
     "dev": "node build/dev-server.js",
-    "build": "node build/build.js"
+    "build": "node build/build.js",
+    "pack":"webpack --config src/vue-waterfall-easy/webpack.js"
   },
   "dependencies": {
     "node-sass": "^4.5.3",
