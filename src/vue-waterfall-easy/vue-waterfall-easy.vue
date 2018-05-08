@@ -80,7 +80,7 @@
   //- 为了防止loading 跟随滚动
   .vue-waterfall-easy-scroll
     .vue-waterfall-easy(:style="isMobile? '' :{width: colWidth*cols+'px',left:'50%', marginLeft: -1*colWidth*cols/2 +'px'}")
-
+      slot(name="waterfall-head")
       a.img-box(
         v-for="(v,i) in imgsArr_c",
         :style="{padding:gap/2+'px', width: isMobile ? '' : colWidth+'px'}"

@@ -5,6 +5,8 @@
       p.some-info 第{{props.index+1}}张图片
       p.some-info {{props.value.info}}
 
+    //- div(slot="waterfall-head")  waterfall-head
+
     //- 自定义加载动画
     //-div(slot="loading" slot-scope="{isFirstLoad}")
       div(slot="loading" v-if="isFirstLoad") first-loading...
