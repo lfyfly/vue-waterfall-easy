@@ -1,6 +1,6 @@
 <template lang="pug">
 #app
-  vue-waterfall-easy(:imgsArr="imgsArr",@scrollReachBottom="fetchImgsData")
+  vue-waterfall-easy( :imgsArr="imgsArr",@scrollReachBottom="fetchImgsData")
     .img-info(slot-scope="props")
       p.some-info 第{{props.index+1}}张图片
       p.some-info {{props.value.info}}

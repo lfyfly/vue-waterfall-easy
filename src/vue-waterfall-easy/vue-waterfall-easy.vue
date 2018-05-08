@@ -1,30 +1,43 @@
 <!-- —————————————↓SCSS———————分界线————————————————————————— -->
 <style lang="scss">
-.vue-waterfall-easy {
-  position: absolute;
-  width: 100%; // 移动端生效
-  & > .img-box {
-    display: inline-block;
-    vertical-align: top;
-    box-sizing: border-box;
-    transition: left 1s, top 1s;
-    width: 50%; // 移动端生效
+.vue-waterfall-easy-container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  .vue-waterfall-easy-scroll {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: scroll;
   }
-  .img-inner-box {
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-  }
-  .img-wraper {
-    & > img {
-      width: 100%;
-      display: block;
+  .vue-waterfall-easy {
+    position: absolute;
+    width: 100%; // 移动端生效
+    & > .img-box {
+      display: inline-block;
+      vertical-align: top;
+      box-sizing: border-box;
+      transition: left 1s, top 1s;
+      width: 50%; // 移动端生效
+    }
+    .img-inner-box {
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    }
+    .img-wraper {
+      & > img {
+        width: 100%;
+        display: block;
+      }
     }
   }
+
   & > .loading.first {
     bottom: 50%;
     transform: translate(-50%, 50%);
   }
   & > .loading {
-    position: fixed;
+    position: absolute;
     left: 50%;
     transform: translateX(-50%);
     bottom: 6px;
@@ -60,18 +73,22 @@
 
 <!-- —————————————↓HTML————————分界线———————————————————————— -->
 <template lang="pug">
-.vue-waterfall-easy(:style="isMobile? '' :{width: colWidth*cols+'px',left:'50%', marginLeft: -1*colWidth*cols/2 +'px'}")
-  .loading.ball-beat(v-if="isPreloading_c", :class="{first:isFirstLoad}")
+.vue-waterfall-easy-container(:style="{width: width&&!isMobile ? width+'px' : '', height: height?height+'px':''}")
+  .loading.ball-beat(v-show="isPreloading_c", :class="{first:isFirstLoad}")
     slot(name="loading", :isFirstLoad="isFirstLoad")
     .dot(v-if="!hasLoadingSlot", v-for="n in loadingDotCount",:style="loadingDotStyle")
-  a.img-box(
-    v-for="(v,i) in imgsArr_c",
-    :style="{padding:gap/2+'px', width: isMobile ? '' : colWidth+'px'}"
-  )
-    .img-inner-box
-      .img-wraper(:style="{width:imgWidth_c+'px',height:v.height?v.height+'px':''}")
-        img(:src="v.src")
-      slot(:index="i",:value="v")
+  //- 为了防止loading 跟随滚动
+  .vue-waterfall-easy-scroll
+    .vue-waterfall-easy(:style="isMobile? '' :{width: colWidth*cols+'px',left:'50%', marginLeft: -1*colWidth*cols/2 +'px'}")
+
+      a.img-box(
+        v-for="(v,i) in imgsArr_c",
+        :style="{padding:gap/2+'px', width: isMobile ? '' : colWidth+'px'}"
+      )
+        .img-inner-box
+          .img-wraper(:style="{width:imgWidth_c+'px',height:v.height?v.height+'px':''}")
+            img(:src="v.src")
+          slot(:index="i",:value="v")
 
 </template>
 
@@ -82,9 +99,11 @@
 export default {
   name: 'vue-waterfall-easy',
   props: {
-    scrollEl: {
-      type: String, // selector
-      default: ''
+    width: {
+      type: Number
+    },
+    height: {
+      type: Number
     },
     reachBottomDistance: { // 滚动触底距离，触发加载新图片
       type: Number, // selector
@@ -143,12 +162,16 @@ export default {
     imgWidth_c() { // 对于移动端重新计算图片宽度
       return this.isMobile ? window.innerWidth / 2 - this.gap : this.imgWidth
     },
-    hasLoadingSlot(){
+    hasLoadingSlot() {
       console.log(this.$scopedSlots)
       return !!this.$scopedSlots.loading
     }
   },
   mounted() {
+    // 除去滚动条宽度，让loading水平居中
+    var scrollEl = this.$el.querySelector('.vue-waterfall-easy-scroll')
+    var scrollbarWidth = scrollEl.offsetWidth - scrollEl.clientWidth
+    this.$el.querySelector('.loading').style.marginLeft =  -scrollbarWidth/2 +'px'
 
     this.preload()
     this.cols = this.calcuCols()
@@ -165,7 +188,7 @@ export default {
       })
 
     })
-    if (!this.isMobile) this.response()
+    if (!this.isMobile && !this.width) this.response()
     this.scroll()
   },
   watch: {
@@ -205,8 +228,8 @@ export default {
     },
     // ==2== 计算cols
     calcuCols() { // 列数初始化
-      var winWidth = window.innerWidth
-      var cols = parseInt(winWidth / this.colWidth)
+      var waterfallWidth = this.width ? this.width : window.innerWidth
+      var cols = parseInt(waterfallWidth / this.colWidth)
       cols = cols === 0 ? 1 : cols
       return this.isMobile
         ? 2
@@ -255,7 +278,7 @@ export default {
 
     // ==5== 滚动触底事件
     scroll() {
-      var scrollEl = this.scrollEl ? document.querySelector(this.scrollEl) : this.$el.parentNode
+      var scrollEl = this.$el.querySelector('.vue-waterfall-easy-scroll')
 
       scrollEl.addEventListener('scroll', () => {
 
