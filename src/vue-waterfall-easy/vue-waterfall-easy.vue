@@ -17,7 +17,8 @@
     & > .img-box {
       position: absolute;
       box-sizing: border-box;
-      transition: left 1s, top 1s;
+      transition: left .6s, top .6s;
+      transition-delay: .1s;
       width: 50%; // 移动端生效
     }
     .img-inner-box {
@@ -27,6 +28,7 @@
       & > img {
         width: 100%;
         display: block;
+        border: none;
       }
     }
   }
@@ -242,7 +244,9 @@ export default {
     },
     // ==3== waterfall布局
     waterfall() {
-      // console.log('waterfall')
+      var scrollEl = this.$el.querySelector('.vue-waterfall-easy-scroll')
+
+      console.log('waterfall')
       var top, left, colWidth = this.isMobile ? this.imgBoxEls[0].offsetWidth : this.colWidth
       if (this.beginIndex == 0) this.colsHeightArr = []
       for (var i = this.beginIndex; i < this.imgsArr.length; i++) {

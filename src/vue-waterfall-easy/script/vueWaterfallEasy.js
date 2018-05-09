@@ -172,16 +172,23 @@ return /******/ (function(modules) { // webpackBootstrap
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 //import XXX from './components/XXX'
 
 /* harmony default export */ __webpack_exports__["a"] = ({
   name: 'vue-waterfall-easy',
   props: {
-    width: {
+    width: { // 容器宽度
       type: Number
     },
-    height: {
+    height: { // 容器高度
       type: Number
     },
     reachBottomDistance: { // 滚动触底距离，触发加载新图片
@@ -206,11 +213,16 @@ return /******/ (function(modules) { // webpackBootstrap
     },
     imgsArr: {
       type: Array,
-      required: true
+      required: true,
+      default: []
     },
     imgWidth: {
       type: Number,
       default: 240
+    },
+    linkRange: { // card | img | custom 自定义通过slot自定义链接范围
+      type: String,
+      default: 'card'
     },
     loadingTimeOut: { // 预加载事件小于500毫秒就不显示加载动画，增加用户体验
       type: Number,
@@ -245,7 +257,6 @@ return /******/ (function(modules) { // webpackBootstrap
       return this.isMobile ? window.innerWidth / 2 - this.gap : this.imgWidth;
     },
     hasLoadingSlot: function hasLoadingSlot() {
-      console.log(this.$scopedSlots);
       return !!this.$scopedSlots.loading;
     }
   },
@@ -263,7 +274,7 @@ return /******/ (function(modules) { // webpackBootstrap
       _this.$nextTick(function () {
         _this.isPreloading = false;
         _this.imgBoxEls = _this.$el.getElementsByClassName('img-box');
-        console.log('图片总数', _this.imgBoxEls.length);
+        // console.log('图片总数', this.imgBoxEls.length)
         _this.waterfall();
       });
     });
@@ -320,6 +331,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
     // ==3== waterfall布局
     waterfall: function waterfall() {
+      var scrollEl = this.$el.querySelector('.vue-waterfall-easy-scroll');
+
       console.log('waterfall');
       var top,
           left,
@@ -374,7 +387,7 @@ return /******/ (function(modules) { // webpackBootstrap
         var minHeight = Math.min.apply(null, _this5.colsHeightArr);
         if (scrollEl.scrollTop + scrollEl.offsetHeight > minHeight - _this5.reachBottomDistance) {
           _this5.isPreloading = true;
-          console.log('scrollReachBottom');
+          // console.log('scrollReachBottom')
           _this5.$emit('scrollReachBottom'); // 滚动触底
         }
       });
@@ -483,7 +496,7 @@ exports = module.exports = __webpack_require__(4)(false);
 
 
 // module
-exports.push([module.i, "\n.vue-waterfall-easy-container {\n  width: 100%;\n  height: 100%;\n  position: relative;\n}\n.vue-waterfall-easy-container .vue-waterfall-easy-scroll {\n    position: relative;\n    width: 100%;\n    height: 100%;\n    overflow-x: hidden;\n    overflow-y: scroll;\n}\n.vue-waterfall-easy-container .vue-waterfall-easy {\n    position: absolute;\n    width: 100%;\n}\n.vue-waterfall-easy-container .vue-waterfall-easy > .img-box {\n      position: absolute;\n      -webkit-box-sizing: border-box;\n              box-sizing: border-box;\n      -webkit-transition: left 1s, top 1s;\n      transition: left 1s, top 1s;\n      width: 50%;\n}\n.vue-waterfall-easy-container .vue-waterfall-easy .img-inner-box {\n      -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);\n              box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);\n}\n.vue-waterfall-easy-container .vue-waterfall-easy .img-wraper > img {\n      width: 100%;\n      display: block;\n}\n.vue-waterfall-easy-container > .loading.first {\n    bottom: 50%;\n    -webkit-transform: translate(-50%, 50%);\n            transform: translate(-50%, 50%);\n}\n.vue-waterfall-easy-container > .loading {\n    position: absolute;\n    left: 50%;\n    -webkit-transform: translateX(-50%);\n            transform: translateX(-50%);\n    bottom: 6px;\n    z-index: 999;\n}\n@-webkit-keyframes ball-beat {\n50% {\n    opacity: 0.2;\n    -webkit-transform: scale(0.75);\n            transform: scale(0.75);\n}\n100% {\n    opacity: 1;\n    -webkit-transform: scale(1);\n            transform: scale(1);\n}\n}\n@keyframes ball-beat {\n50% {\n    opacity: 0.2;\n    -webkit-transform: scale(0.75);\n            transform: scale(0.75);\n}\n100% {\n    opacity: 1;\n    -webkit-transform: scale(1);\n            transform: scale(1);\n}\n}\n.vue-waterfall-easy-container > .loading.ball-beat > .dot {\n      vertical-align: bottom;\n      background-color: #4b15ab;\n      width: 12px;\n      height: 12px;\n      border-radius: 50%;\n      margin: 3px;\n      -webkit-animation-fill-mode: both;\n              animation-fill-mode: both;\n      display: inline-block;\n      -webkit-animation: ball-beat 0.7s 0s infinite linear;\n              animation: ball-beat 0.7s 0s infinite linear;\n}\n.vue-waterfall-easy-container > .loading.ball-beat > .dot:nth-child(2n-1) {\n      -webkit-animation-delay: 0.35s;\n              animation-delay: 0.35s;\n}\n", ""]);
+exports.push([module.i, "\n.vue-waterfall-easy-container {\n  width: 100%;\n  height: 100%;\n  position: relative;\n}\n.vue-waterfall-easy-container .vue-waterfall-easy-scroll {\n    position: relative;\n    width: 100%;\n    height: 100%;\n    overflow-x: hidden;\n    overflow-y: scroll;\n}\n.vue-waterfall-easy-container .vue-waterfall-easy {\n    position: absolute;\n    width: 100%;\n}\n.vue-waterfall-easy-container .vue-waterfall-easy > .img-box {\n      position: absolute;\n      -webkit-box-sizing: border-box;\n              box-sizing: border-box;\n      -webkit-transition: left .6s, top .6s;\n      transition: left .6s, top .6s;\n      -webkit-transition-delay: .1s;\n              transition-delay: .1s;\n      width: 50%;\n}\n.vue-waterfall-easy-container .vue-waterfall-easy .img-inner-box {\n      -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);\n              box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);\n}\n.vue-waterfall-easy-container .vue-waterfall-easy .img-wraper > img {\n      width: 100%;\n      display: block;\n      border: none;\n}\n.vue-waterfall-easy-container > .loading.first {\n    bottom: 50%;\n    -webkit-transform: translate(-50%, 50%);\n            transform: translate(-50%, 50%);\n}\n.vue-waterfall-easy-container > .loading {\n    position: absolute;\n    left: 50%;\n    -webkit-transform: translateX(-50%);\n            transform: translateX(-50%);\n    bottom: 6px;\n    z-index: 999;\n}\n@-webkit-keyframes ball-beat {\n50% {\n    opacity: 0.2;\n    -webkit-transform: scale(0.75);\n            transform: scale(0.75);\n}\n100% {\n    opacity: 1;\n    -webkit-transform: scale(1);\n            transform: scale(1);\n}\n}\n@keyframes ball-beat {\n50% {\n    opacity: 0.2;\n    -webkit-transform: scale(0.75);\n            transform: scale(0.75);\n}\n100% {\n    opacity: 1;\n    -webkit-transform: scale(1);\n            transform: scale(1);\n}\n}\n.vue-waterfall-easy-container > .loading.ball-beat > .dot {\n      vertical-align: bottom;\n      background-color: #4b15ab;\n      width: 12px;\n      height: 12px;\n      border-radius: 50%;\n      margin: 3px;\n      -webkit-animation-fill-mode: both;\n              animation-fill-mode: both;\n      display: inline-block;\n      -webkit-animation: ball-beat 0.7s 0s infinite linear;\n              animation: ball-beat 0.7s 0s infinite linear;\n}\n.vue-waterfall-easy-container > .loading.ball-beat > .dot:nth-child(2n-1) {\n      -webkit-animation-delay: 0.35s;\n              animation-delay: 0.35s;\n}\n", ""]);
 
 // exports
 
@@ -1006,6 +1019,11 @@ var render = function() {
                   style: {
                     padding: _vm.gap / 2 + "px",
                     width: _vm.isMobile ? "" : _vm.colWidth + "px"
+                  },
+                  attrs: {
+                    href:
+                      _vm.linkRange == "card" ? v.href : "javascript:void(0)",
+                    target: "_blank"
                   }
                 },
                 [
@@ -1014,12 +1032,19 @@ var render = function() {
                     { staticClass: "img-inner-box" },
                     [
                       _c(
-                        "div",
+                        "a",
                         {
                           staticClass: "img-wraper",
                           style: {
                             width: _vm.imgWidth_c + "px",
                             height: v.height ? v.height + "px" : ""
+                          },
+                          attrs: {
+                            href:
+                              _vm.linkRange == "img" || _vm.linkRange == "card"
+                                ? v.href
+                                : "javascript:void(0)",
+                            target: "_blank"
                           }
                         },
                         [_c("img", { attrs: { src: v.src } })]
