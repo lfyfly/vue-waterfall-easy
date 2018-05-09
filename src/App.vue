@@ -28,7 +28,7 @@ export default {
     vueWaterfallEasy
   },
   methods: {
-    getData(group) { //
+    getData(group) {
       axios.get('./static/mock/data.json?group=' + this.group) // 真实环境中，后端会根据参数group返回新的图片数组，这里我用一个惊呆json文件模拟
         .then(res => {
           this.imgsArr = this.imgsArr.concat(res.data)
@@ -40,7 +40,6 @@ export default {
     this.getData()
   },
 }
-
 </script>
 
 <style lang="scss">
