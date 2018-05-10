@@ -1,10 +1,11 @@
 <template lang="pug">
 #app
   a#header(href="https://github.com/lfyfly/vue-waterfall-easy",target="_blank",title="github of vue-waterfall-easy ") vue-waterfall-easy
-  vue-waterfall-easy(:imgsArr="imgsArr",@scrollReachBottom="getData")
-    .img-info(slot-scope="props")
-      p.some-info 第{{props.index+1}}张图片
-      p.some-info {{props.value.info}}
+  #content
+    vue-waterfall-easy(:imgsArr="imgsArr",@scrollReachBottom="getData")
+      .img-info(slot-scope="props")
+        p.some-info 第{{props.index+1}}张图片
+        p.some-info {{props.value.info}}
 
     //- div(slot="waterfall-head")  waterfall-head
 
@@ -60,16 +61,30 @@ body,
 #app {
   height: 100%;
 }
-#header {
-  display: block;
-  text-align: center;
-  background: #000;
-  color: #cccccc;
-  line-height: 2;
-  font-size: 16px;
-  font-weight: bold;
-  letter-spacing: 2px;
+
+#app {
+  position: relative;
+  #header {
+    display: block;
+    text-align: center;
+    background: #000;
+    color: #cccccc;
+    line-height: 32px;
+    font-size: 16px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    position: fixed;
+    z-index: 999;
+    width: 100%;
+  }
+  #content {
+    position: absolute;
+    top: 32px;
+    bottom: 0;
+    width: 100%;
+  }
 }
+
 #app {
   overflow: auto;
   position: relative;
