@@ -57,6 +57,7 @@ js
 ```js
 import vueWaterfallEasy from './vue-waterfall-easy/vue-waterfall-easy.vue'
 import axios from 'axios'
+
 export default {
   name: 'app',
   data() {
@@ -85,10 +86,11 @@ export default {
 [详情见仓库App.vue文件](https://github.com/lfyfly/vue-waterfall-easy/blob/master/src/App.vue)
 
 ## 3. 组件参数
+
 参数 | 类型 | 默认值 | 描述
 ---|---|---|---
-width | Number |  - | 容器宽度，默认是相对父元素宽度100%
-height | Number | - | 容器高度，默认是相对父元素高度100%
+width | Number |  - | 容器宽度，默认是相对父元素宽度100%，**由于响应式，此时其所有上级元素宽度必须都是相对浏览器窗口100%**，具体看该表格下面实例。<br>**如果为定宽的话，必须设置width值**，而不能只是其父元素设置定宽
+height | Number | - | 容器高度，默认是相对父元素高度100%<br>**当不传递height值时，父元素必须具有高度**
 gap | Number | 20 | 单位：px<br> 图片之间的间距
 imgsArr | Array | [] | **必填**<br>用于渲染瀑布流的数据<br>每个数组元素是个对象，必须要有src和href属性<br>src属性代表图片的src属性<br>href属性代表点击跳转的链接
 imgWidth | Number | 240 | 单位：px<br>图片的宽度
@@ -99,7 +101,16 @@ loadingDotCount | Number | 3 | 默认loading动画点的数量
 loadingDotStyle | Object | null | 默认loading动画内小圆点的样式对象，可以自定义其样式
 loadingTimeOut | Number | 500 | 单位：ms<br> 预加载事件小于500毫秒就不显示加载动画，增加用户体验
 
-
+### waterfall组件祖先元素css样式
+[详情见 App.vue 文件](https://github.com/lfyfly/vue-waterfall-easy/blob/master/src/App.vue)
+```
+html,
+body,
+#app {
+  height: 100%; // 父元素必须要有高度
+  width: 100%; // 如果已经是block元素，则可以忽略
+}
+```
 
 
 ## 4. 事件

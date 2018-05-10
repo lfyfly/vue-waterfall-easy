@@ -1,8 +1,8 @@
 # vue-waterfall-easy
 1. This is a vue component that contains waterfall flow layout and infinite scroll loading
-2. Compared to other implementations, there is no need to specify the width and height of the image in the returned data
+2. Compared to other implementations,there is no need to specify the width and height of the image in the returned data
 3. It is because of the second item that the image is preloaded and then layout
-4. Responsive layout, adapt mobile
+4. Responsive layout,adapt mobile
 5. Simple to use
 
 ## [中文文档](https://github.com/lfyfly/vue-waterfall-easy/blob/master/README-CN.md)
@@ -65,7 +65,7 @@ export default {
   data() {
     return {
       imgsArr: [],
-      group: 0, // request param
+      group: 0,// request param
     }
   },
   components: {
@@ -73,7 +73,7 @@ export default {
   },
   methods: {
     getData(group) {
-      // In the real environment, the backend will return a new image array based on the parameter group.
+      // In the real environment,the backend will return a new image array based on the parameter group.
       // Here I simulate it with a stunned json file.
       axios.get('./static/mock/data.json?group=' + this.group)
         .then(res => {
@@ -92,8 +92,8 @@ export default {
 ## 3. Props
 props | type | default | description
 ---|---|---|---
-width | Number |  - | Container width, default is 100% relative parent element width
-height | Number | - | Container height, default is 100% relative parent element height
+width | Number |  - | Container width,default is 100% relative parent element width,**Due to the responsiveness,all its parent's width must be 100% relative to the browser window at this time**,See the example after the table<br>**If it is fixed width, you must set the width prop **, not just its parent element set fixed width
+height | Number | - | Container height,default is 100% relative parent element height<br>**The parent element must have a height when the height prop is not passed**
 gap | Number | 20 | space between pictures(px)
 imgsArr | Array | [] | **required**<br>Data used to render the waterfall stream<br>Each array element is an object and must have src and href attributes.<br>The src attribute represents the SRC attribute of the picture<br>The href attribute represents the link to click to jump
 imgWidth | Number | 240 | The width of the picture（px）
@@ -102,7 +102,7 @@ linkRange | String | card | Identify click to trigger jump link range<br>value:<
 reachBottomDistance | Number | 0 | The distance(px) from the bottom of the container when the scrolling triggers the scrollReachBottom event
 loadingDotCount | Number | 3 | The number of default loading animation dots
 loadingDotStyle | Object | null | The style object of the small dots in the default loading element
-loadingTimeOut | Number | 500 |  Preloading events less than 500ms milliseconds do not display loading animations, increasing the user experience
+loadingTimeOut | Number | 500 |  Preloading events less than 500ms milliseconds do not display loading animations,increasing the user experience
 
 
 
@@ -110,7 +110,7 @@ loadingTimeOut | Number | 500 |  Preloading events less than 500ms milliseconds 
 ## 4. Event
 event name | description
 ---|---
-scrollReachBottom | When the scroll bar scrolls to the bottom, it is used to trigger a request for new image data
+scrollReachBottom | When the scroll bar scrolls to the bottom,it is used to trigger a request for new image data
 preloaded | Trigger every time image preloading is completed
 
 ## 5. slot
@@ -119,7 +119,7 @@ Custom picture description element
 #### parameter
 parameterpar | description
 ---|---
-props.index | The index of the image in the data array, starting from 0
+props.index | The index of the image in the data array,starting from 0
 props.value | The value of imgsArr item
 
 ```html
@@ -151,7 +151,7 @@ Waterfall container head slot
 ## 6. Adapted mobile
 Don't forget to add following  code in index.html \<head\>
 ```html
-<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 ```
 
 
