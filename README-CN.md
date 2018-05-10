@@ -30,7 +30,7 @@ export default {
 }
 ```
 ### 1.3 js引用
-[下载vueWaterfallEasy.js](https://github.com/MopTym/vue-waterfall/tree/master/src/vue-waterfall-easy/script/vueWaterfallEasy.js)
+[下载vueWaterfallEasy.js](https://github.com/lfyfly/vue-waterfall-easy/blob/master/src/vue-waterfall-easy/script/vueWaterfallEasy.js)
 ```html
 <script src="path/to/vue/vue.js"></script>
 <script src="path/to/vueWaterfallEasy.js"></script>
