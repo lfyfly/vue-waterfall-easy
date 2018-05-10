@@ -6,7 +6,7 @@
 5. Simple to use
 
 ## [中文文档](https://github.com/lfyfly/vue-waterfall-easy/blob/master/README-CN.md)
-## [Demo](http://lfyfly.gitee.io/vue-waterfall-easy/docs/)
+## [Demo](https://lfyfly.github.io/vue-waterfall-easy/demo/index.html)
 ## [code of demo](https://github.com/lfyfly/vue-waterfall-easy/blob/master/src/App.vue)
 ## [github](https://github.com/lfyfly/vue-waterfall-easy)
 
