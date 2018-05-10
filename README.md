@@ -1,4 +1,4 @@
-# vue-waterfall-easy
+# vue-waterfall-easy 2.x
 1. This is a vue component that contains waterfall flow layout and infinite scroll loading
 2. Compared to other implementations,there is no need to specify the width and height of the image in the returned data
 3. It is because of the second item that the image is preloaded and then layout
