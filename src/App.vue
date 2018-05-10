@@ -1,5 +1,6 @@
 <template lang="pug">
 #app
+  a#header(href="https://github.com/lfyfly/vue-waterfall-easy",target="_blank",title="github of vue-waterfall-easy ") vue-waterfall-easy
   vue-waterfall-easy(:imgsArr="imgsArr",@scrollReachBottom="getData")
     .img-info(slot-scope="props")
       p.some-info 第{{props.index+1}}张图片
@@ -59,7 +60,16 @@ body,
 #app {
   height: 100%;
 }
-
+#header {
+  display: block;
+  text-align: center;
+  background: #000;
+  color: #cccccc;
+  line-height: 2;
+  font-size: 16px;
+  font-weight: bold;
+  letter-spacing: 2px;
+}
 #app {
   overflow: auto;
   position: relative;

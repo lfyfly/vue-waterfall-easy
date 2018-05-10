@@ -333,7 +333,7 @@ return /******/ (function(modules) { // webpackBootstrap
     waterfall: function waterfall() {
       var scrollEl = this.$el.querySelector('.vue-waterfall-easy-scroll');
 
-      console.log('waterfall');
+      // console.log('waterfall')
       var top,
           left,
           colWidth = this.isMobile ? this.imgBoxEls[0].offsetWidth : this.colWidth;

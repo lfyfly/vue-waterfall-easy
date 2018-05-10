@@ -246,7 +246,7 @@ export default {
     waterfall() {
       var scrollEl = this.$el.querySelector('.vue-waterfall-easy-scroll')
 
-      console.log('waterfall')
+      // console.log('waterfall')
       var top, left, colWidth = this.isMobile ? this.imgBoxEls[0].offsetWidth : this.colWidth
       if (this.beginIndex == 0) this.colsHeightArr = []
       for (var i = this.beginIndex; i < this.imgsArr.length; i++) {
