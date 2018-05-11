@@ -25,6 +25,7 @@
       box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
     }
     .img-wraper {
+      display: block;
       & > img {
         width: 100%;
         display: block;
@@ -264,6 +265,7 @@ export default {
           // 更新colsHeightArr
           this.colsHeightArr[minIndex] = minHeight + this.imgBoxEls[i].offsetHeight
         }
+
         this.imgBoxEls[i].style.left = left + 'px'
         this.imgBoxEls[i].style.top = top + 'px'
       }
