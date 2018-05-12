@@ -2,7 +2,7 @@
 #app
   a#header(href="https://github.com/lfyfly/vue-waterfall-easy",target="_blank",title="github of vue-waterfall-easy ") vue-waterfall-easy
   #content
-    vue-waterfall-easy(:imgsArr="imgsArr",@scrollReachBottom="getData")
+    vue-waterfall-easy(:imgsArr="imgsArr",@scrollReachBottom="getData", @click="clickFn")
       .img-info(slot-scope="props")
         p.some-info 第{{props.index+1}}张图片
         p.some-info {{props.value.info}}
@@ -37,6 +37,12 @@ export default {
           group++
         })
     },
+    clickFn(event, { index, value }) {
+      // event.preventDefault()
+      if (event.target.tagName.toLowerCase() == 'img') {
+        console.log('img clicked', index, value)
+      }
+    }
   },
   created() {
     this.getData()

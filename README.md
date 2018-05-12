@@ -112,6 +112,22 @@ event name | description
 ---|---
 scrollReachBottom | When the scroll bar scrolls to the bottom,it is used to trigger a request for new image data
 preloaded | Trigger every time image preloading is completed
+click | Trigger when the card is clicked,look at an example under the table
+
+click event demo
+```html
+<vue-waterfall-easy :imgsArr="imgsArr" @scrollReachBottom="getData" @click="clickFn"></vue-waterfall-easy>
+```
+```js
+  clickFn(event, { index, value }) {
+    // Prevent a tag jump
+    event.preventDefault()
+    // Do it only when you click on the image
+    if (event.target.tagName.toLowerCase() == 'img') {
+      console.log('img clicked',index, value)
+    }
+  }
+```
 
 ## 5. slot
 ### 5.1 default slot

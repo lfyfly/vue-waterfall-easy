@@ -21,11 +21,14 @@
       transition-delay: .1s;
       width: 50%; // 移动端生效
     }
-    .img-inner-box {
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-    }
-    .img-wraper {
+    a{
       display: block;
+    }
+    a.img-inner-box {
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+      border-radius: 4px;
+    }
+    a.img-wraper {
       & > img {
         width: 100%;
         display: block;
@@ -83,13 +86,14 @@
   .vue-waterfall-easy-scroll
     .vue-waterfall-easy(:style="isMobile? '' :{width: colWidth*cols+'px',left:'50%', marginLeft: -1*colWidth*cols/2 +'px'}")
       slot(name="waterfall-head")
-      a.img-box(
+      .img-box(
         v-for="(v,i) in imgsArr_c",
-        :href="linkRange=='card' ? v.href : 'javascript:void(0)' ",
-        target="_blank",
         :style="{padding:gap/2+'px', width: isMobile ? '' : colWidth+'px'}"
       )
-        .img-inner-box
+        a.img-inner-box(
+          :data-index="i",
+          :href="linkRange=='card' ? v.href : 'javascript:void(0)' ",
+          target="_blank")
           a.img-wraper(
             :href="linkRange=='img'||linkRange=='card' ? v.href : 'javascript:void(0)' ",
             target="_blank",
@@ -179,7 +183,7 @@ export default {
     }
   },
   mounted() {
-
+    this.bindClickEvent()
     this.loadingMiddle()
 
     this.preload()
@@ -301,7 +305,22 @@ export default {
         }
       })
     },
-
+     // ==6== 点击事件绑定
+    bindClickEvent() {
+      this.$el.querySelector(".vue-waterfall-easy")
+        .addEventListener('click', e => {
+          var targetEl = e.target;
+          if (targetEl.className.indexOf("img-box") != -1) return;
+          while (targetEl.className.indexOf("img-inner-box") == -1) {
+            targetEl = targetEl.parentNode;
+          }
+          var index = targetEl.getAttribute("data-index");
+          this.$emit('click', e,{
+            index,
+            value: this.imgsArr_c[index],
+          })
+        })
+    },
     // other
     loadingMiddle() {
       // 对滚动条宽度造成的不居中进行校正

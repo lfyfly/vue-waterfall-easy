@@ -118,6 +118,22 @@ body,
 ---|---
 scrollReachBottom | 滚动条滚动到底部时,用于请求新的图片数据
 preloaded | 每次图片预加载完成执行
+click | 当卡片被点击时触发，看下面的实例
+
+click事件使用实例
+```html
+<vue-waterfall-easy :imgsArr="imgsArr" @scrollReachBottom="getData" @click="clickFn"></vue-waterfall-easy>
+```
+```js
+  clickFn(event, { index, value }) {
+    // 阻止a标签跳转
+    event.preventDefault()
+    // 只有当点击到图片时才进行操作
+    if (event.target.tagName.toLowerCase() == 'img') {
+      console.log('img clicked',index, value)
+    }
+  }
+```
 
 ## 5. slot插槽
 ### 5.1 默认slot
