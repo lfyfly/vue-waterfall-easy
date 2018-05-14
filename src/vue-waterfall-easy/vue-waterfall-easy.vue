@@ -17,11 +17,11 @@
     & > .img-box {
       position: absolute;
       box-sizing: border-box;
-      transition: left .6s, top .6s;
-      transition-delay: .1s;
+      transition: left 0.6s, top 0.6s;
+      transition-delay: 0.1s;
       width: 50%; // 移动端生效
     }
-    a{
+    a {
       display: block;
     }
     a.img-inner-box {
@@ -92,13 +92,13 @@
       )
         a.img-inner-box(
           :data-index="i",
-          :href="linkRange=='card' ? v.href : 'javascript:void(0)' ",
+          :href="linkRange=='card' ? v[hrefKey] : 'javascript:void(0)' ",
           target="_blank")
           a.img-wraper(
-            :href="linkRange=='img'||linkRange=='card' ? v.href : 'javascript:void(0)' ",
+            :href="linkRange=='img'||linkRange=='card' ? v[hrefKey] : 'javascript:void(0)' ",
             target="_blank",
             :style="{width:imgWidth_c+'px',height:v.height?v.height+'px':''}")
-            img(:src="v.src")
+            img(:src="v[srcKey]")
           slot(:index="i",:value="v")
 
 </template>
@@ -139,15 +139,23 @@ export default {
     imgsArr: {
       type: Array,
       required: true,
-      default:[]
+      default: []
+    },
+    srcKey: {
+      type: String,
+      default: 'src'
+    },
+    hrefKey: {
+      type: String,
+      default: 'href'
     },
     imgWidth: {
       type: Number,
       default: 240
     },
-    linkRange:{ // card | img | custom 自定义通过slot自定义链接范围
+    linkRange: { // card | img | custom 自定义通过slot自定义链接范围
       type: String,
-      default:'card'
+      default: 'card'
     },
     loadingTimeOut: { // 预加载事件小于500毫秒就不显示加载动画，增加用户体验
       type: Number,
@@ -305,7 +313,7 @@ export default {
         }
       })
     },
-     // ==6== 点击事件绑定
+    // ==6== 点击事件绑定
     bindClickEvent() {
       this.$el.querySelector(".vue-waterfall-easy")
         .addEventListener('click', e => {
@@ -315,7 +323,7 @@ export default {
             targetEl = targetEl.parentNode;
           }
           var index = targetEl.getAttribute("data-index");
-          this.$emit('click', e,{
+          this.$emit('click', e, {
             index,
             value: this.imgsArr_c[index],
           })

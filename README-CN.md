@@ -7,7 +7,7 @@
 
 ## [在线DEMO](https://lfyfly.github.io/vue-waterfall-easy/demo/)
 ## [Demo案例代码](https://github.com/lfyfly/vue-waterfall-easy/blob/master/src/App.vue)
-
+## [更新列表](https://github.com/lfyfly/vue-waterfall-easy/issues/8)
 ## [github](https://github.com/lfyfly/vue-waterfall-easy)
 
 ## 1. 使用
@@ -92,7 +92,9 @@ export default {
 width | Number |  - | 容器宽度，默认是相对父元素宽度100%，**由于响应式，此时其所有上级元素宽度必须都是相对浏览器窗口100%**，具体看该表格下面实例。<br>**如果为定宽的话，必须设置width值**，而不能只是其父元素设置定宽
 height | Number | - | 容器高度，默认是相对父元素高度100%<br>**当不传递height值时，父元素必须具有高度**
 gap | Number | 20 | 单位：px<br> 图片之间的间距
-imgsArr | Array | [] | **必填**<br>用于渲染瀑布流的数据<br>每个数组元素是个对象，必须要有src和href属性<br>src属性代表图片的src属性<br>href属性代表点击跳转的链接
+imgsArr | Array | [] | **必填**<br>用于渲染瀑布流的数据<br>每个数组元素是个对象，应该要有src和href属性<br>src属性代表图片的src属性<br>href属性代表点击跳转的链接<br>**如果你的键值不是`src`和`href`，你可以使用`srcKey`和`hrefKey`这两个属性进行键值装换**
+srcKey | String | 'src' | 当你的图片地址键值不为`src`，可以使用该属性进行转换
+hrefKey | String | 'href' | 当你的图片地址键值不为`href`，可以使用该属性进行转换
 imgWidth | Number | 240 | 单位：px<br>图片的宽度
 maxCols | Number | 5 | 瀑布流显示最大的列数
 linkRange | String | card | 标识点击触发跳转链接范围，值有：<br>card 整张卡牌范围跳转链接<br> img 卡片内图片范围 <br> custom 自定义可以通过slot插槽自定义跳转链接元素

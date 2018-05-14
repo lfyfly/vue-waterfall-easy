@@ -8,6 +8,7 @@
 ## [中文文档](https://github.com/lfyfly/vue-waterfall-easy/blob/master/README-CN.md)
 ## [Demo](https://lfyfly.github.io/vue-waterfall-easy/demo/)
 ## [code of demo](https://github.com/lfyfly/vue-waterfall-easy/blob/master/src/App.vue)
+## [update list](https://github.com/lfyfly/vue-waterfall-easy/issues/8)
 ## [github](https://github.com/lfyfly/vue-waterfall-easy)
 
 ## 1. Usage
@@ -95,7 +96,9 @@ props | type | default | description
 width | Number |  - | Container width,default is 100% relative parent element width,**Due to the responsiveness,all its parent's width must be 100% relative to the browser window at this time**,See the example after the table<br>**If it is fixed width, you must set the width prop **, not just its parent element set fixed width
 height | Number | - | Container height,default is 100% relative parent element height<br>**The parent element must have a height when the height prop is not passed**
 gap | Number | 20 | space between pictures(px)
-imgsArr | Array | [] | **required**<br>Data used to render the waterfall stream<br>Each array element is an object and must have src and href attributes.<br>The src attribute represents the SRC attribute of the picture<br>The href attribute represents the link to click to jump
+imgsArr | Array | [] | **required**<br>Data used to render the waterfall stream<br>Each array element is an object and must have `src` and `href` attributes.<br>The `src` attribute represents the SRC attribute of the picture<br>The `href` attribute represents the link to click to jump <br>**if your key is not `src` and `href`, you can use the two properties of `srcKey` and `hrefKey` to do the key value replacement.**
+srcKey | String | 'src' | When the key value of your picture address is not `src`, you can use this property to replace it.
+hrefKey | String | 'href' |  When the key value of your picture address is not `href`, you can use this property to replace it.
 imgWidth | Number | 240 | The width of the picture（px）
 maxCols | Number | 5 | Waterfall shows the maximum number of columns
 linkRange | String | card | Identify click to trigger jump link range<br>value:<br>'card' Whole card range<br> 'img' image range <br> 'custom' Customize the link range through slots
