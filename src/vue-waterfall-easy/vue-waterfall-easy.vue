@@ -84,19 +84,19 @@
     .dot(v-if="!hasLoadingSlot", v-for="n in loadingDotCount",:style="loadingDotStyle")
   //- 为了防止loading 跟随滚动
   .vue-waterfall-easy-scroll
+    slot(name="waterfall-head")
     .vue-waterfall-easy(:style="isMobile? '' :{width: colWidth*cols+'px',left:'50%', marginLeft: -1*colWidth*cols/2 +'px'}")
-      slot(name="waterfall-head")
       .img-box(
         v-for="(v,i) in imgsArr_c",
         :style="{padding:gap/2+'px', width: isMobile ? '' : colWidth+'px'}"
       )
-        a.img-inner-box(
+        component.img-inner-box(
+          :is="isRouterLink? 'router-link' : 'alink'",
           :data-index="i",
-          :href="linkRange=='card' ? v[hrefKey] : 'javascript:void(0)' ",
-          target="_blank")
-          a.img-wraper(
-            :href="linkRange=='img'||linkRange=='card' ? v[hrefKey] : 'javascript:void(0)' ",
-            target="_blank",
+          :to="linkRange=='card' ? v[hrefKey] : 'javascript:void(0)' ")
+          component.img-wraper(
+            :is="isRouterLink ? 'router-link' :'alink'",
+            :to="linkRange=='img'||linkRange=='card' ? v[hrefKey] : 'javascript:void(0)' ",
             :style="{width:imgWidth_c+'px',height:v.height?v.height+'px':''}")
             img(:src="v[srcKey]")
           slot(:index="i",:value="v")
@@ -105,10 +105,13 @@
 
 <!-- ——————————————↓JS—————————分界线———————————————————————— -->
 <script>
-//import XXX from './components/XXX'
+import alink from './components/alink.vue'
 
 export default {
   name: 'vue-waterfall-easy',
+  components: {
+    alink
+  },
   props: {
     width: { // 容器宽度
       type: Number
@@ -152,6 +155,10 @@ export default {
     imgWidth: {
       type: Number,
       default: 240
+    },
+    isRouterLink: {
+      type: Boolean,
+      default: false
     },
     linkRange: { // card | img | custom 自定义通过slot自定义链接范围
       type: String,

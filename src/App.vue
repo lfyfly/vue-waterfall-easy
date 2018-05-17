@@ -1,13 +1,15 @@
 <template lang="pug">
 #app
-  a#header(href="https://github.com/lfyfly/vue-waterfall-easy",target="_blank",title="github of vue-waterfall-easy ") vue-waterfall-easy
+  a#header(href="https://github.com/lfyfly/vue-waterfall-easy",target="_blank",title="github of vue-waterfall-easy") vue-waterfall-easy
   #content
     vue-waterfall-easy(:imgsArr="imgsArr",@scrollReachBottom="getData", @click="clickFn")
       .img-info(slot-scope="props")
         p.some-info 第{{props.index+1}}张图片
         p.some-info {{props.value.info}}
 
-    //- div(slot="waterfall-head")  waterfall-head
+      //-div(slot="waterfall-head")
+        h1 waterfall-head
+        h1 waterfall-head
 
     //- 自定义加载动画
     //-div(slot="loading" slot-scope="{isFirstLoad}")

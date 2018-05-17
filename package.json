@@ -1,6 +1,6 @@
 {
   "name": "vue-waterfall-easy",
-  "version": "2.0.7",
+  "version": "2.0.8",
   "description": "A waterfall layout component for Vue.js",
   "author": "lfyfly <410793635@qq.com>",
   "main": "./src/vue-waterfall-easy/vue-waterfall-easy.vue",
@@ -19,7 +19,8 @@
     "promise-polyfill": "^7.1.2",
     "pug": "^2.0.3",
     "sass-loader": "^7.0.1",
-    "vue": "^2.5.16"
+    "vue": "^2.5.16",
+    "vue-router": "^3.0.1"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",

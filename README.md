@@ -101,7 +101,8 @@ srcKey | String | 'src' | When the key value of your picture address is not `src
 hrefKey | String | 'href' |  When the key value of your picture address is not `href`, you can use this property to replace it.
 imgWidth | Number | 240 | The width of the picture（px）
 maxCols | Number | 5 | Waterfall shows the maximum number of columns
-linkRange | String | card | Identify click to trigger jump link range<br>value:<br>'card' Whole card range<br> 'img' image range <br> 'custom' Customize the link range through slots
+linkRange | String | 'card' | Identify click to trigger jump link range<br>value:<br>'card' Whole card range<br> 'img' image range <br> 'custom' Customize the link range through slots
+isRouterLink | Boolean | false | Render the a tag when the value is false<br>Render the router-link component when the value is true
 reachBottomDistance | Number | 0 | The distance(px) from the bottom of the container when the scrolling triggers the scrollReachBottom event
 loadingDotCount | Number | 3 | The number of default loading animation dots
 loadingDotStyle | Object | null | The style object of the small dots in the default loading element
