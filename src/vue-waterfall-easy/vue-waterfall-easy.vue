@@ -1,5 +1,5 @@
 <!-- —————————————↓SCSS———————分界线————————————————————————— -->
-<style lang="scss">
+<style lang="scss" scoped>
 .vue-waterfall-easy-container {
   width: 100%;
   height: 100%;
@@ -88,7 +88,7 @@
     .vue-waterfall-easy(:style="isMobile? '' :{width: colWidth*cols+'px',left:'50%', marginLeft: -1*colWidth*cols/2 +'px'}")
       .img-box(
         v-for="(v,i) in imgsArr_c",
-        :style="{padding:gap/2+'px', width: isMobile ? '' : colWidth+'px'}"
+        :style="{padding: (isMobile ? mobileGap : gap)/2+'px', width: isMobile ? '' : colWidth+'px'}"
       )
         component.img-inner-box(
           :is="isRouterLink? 'router-link' : 'alink'",
@@ -97,7 +97,7 @@
           component.img-wraper(
             :is="isRouterLink ? 'router-link' :'alink'",
             :to="linkRange=='img'||linkRange=='card' ? v[hrefKey] : 'javascript:void(0)' ",
-            :style="{width:imgWidth_c+'px',height:v.height?v.height+'px':''}")
+            :style="{width:imgWidth_c+'px',height:v._height?v._height+'px':''}")
             img(:src="v[srcKey]")
           slot(:index="i",:value="v")
 
@@ -134,6 +134,10 @@ export default {
     gap: { // .img-box 间距
       type: Number,
       default: 20
+    },
+    mobileGap: {
+      type: Number,
+      default: 8
     },
     maxCols: {
       type: Number,
@@ -190,8 +194,8 @@ export default {
     colWidth() { // 每一列的宽度
       return this.imgWidth + this.gap
     },
-    imgWidth_c() { // 对于移动端重新计算图片宽度
-      return this.isMobile ? window.innerWidth / 2 - this.gap : this.imgWidth
+    imgWidth_c() { // 对于移动端重新计算图片宽度`
+      return this.isMobile ? window.innerWidth / 2 - this.mobileGap : this.imgWidth
     },
     hasLoadingSlot() {
       return !!this.$scopedSlots.loading
@@ -230,7 +234,10 @@ export default {
       }
     },
     imgsArr(newV, oldV) {
-      if (newV.length === oldV.length) return
+      if (oldV.length > 0 && newV[0] && !newV[0]._height) {
+        // console.log('reset')
+        this.reset()
+      }
       this.preload()
     },
 
@@ -241,11 +248,11 @@ export default {
       this.imgsArr.forEach((imgItem, imgIndex) => {
         if (imgIndex < this.loadedCount) return // 只对新加载图片进行预加载
         var oImg = new Image()
-        oImg.src = imgItem.src
+        oImg.src = imgItem[this.srcKey]
         oImg.onload = oImg.onerror = (e) => {
           this.loadedCount++
           // 预加载图片，计算图片容器的高
-          if (e.type == 'load') this.$set(this.imgsArr[imgIndex], 'height', Math.round(this.imgWidth_c / (oImg.width / oImg.height)))
+          if (e.type == 'load') this.imgsArr[imgIndex]._height = Math.round(this.imgWidth_c / (oImg.width / oImg.height))
           if (this.loadedCount == this.imgsArr.length) {
             this.$emit('preloaded')
           }
@@ -342,6 +349,11 @@ export default {
       var scrollEl = this.$el.querySelector('.vue-waterfall-easy-scroll')
       var scrollbarWidth = scrollEl.offsetWidth - scrollEl.clientWidth
       this.$el.querySelector('.loading').style.marginLeft = -scrollbarWidth / 2 + 'px'
+    },
+    reset() {
+      this.imgsArr_c = []
+      this.beginIndex = 0
+      this.loadedCount = 0
     }
   }
 }

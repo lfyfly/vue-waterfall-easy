@@ -51,7 +51,9 @@ html
 <vue-waterfall-easy :imgsArr="imgsArr" @scrollReachBottom="getData"></vue-waterfall-easy>
 ```
 
-**getData新请求返回的数据与原来的数据进行合并**
+**如果imgArr是替换更新，getData新请求返回的数据覆盖原来的数据。**
+
+**如果imgArr是增量更新，getData新请求返回的数据与原来的数据进行合并，此时不建议使用替换更新，会浪费性能。下面这个例子就是增量更新。**
 
 js
 ```js
@@ -91,7 +93,8 @@ export default {
 ---|---|---|---
 width | Number |  - | 容器宽度，默认是相对父元素宽度100%，**由于响应式，此时其所有上级元素宽度必须都是相对浏览器窗口100%**，具体看该表格下面实例。<br>**如果为定宽的话，必须设置width值**，而不能只是其父元素设置定宽
 height | Number | - | 容器高度，默认是相对父元素高度100%<br>**当不传递height值时，父元素必须具有高度**
-gap | Number | 20 | 单位：px<br> 图片之间的间距
+gap | Number | 20 | 单位：px<br> pc端图片之间的间距
+mobileGap | Number | 8 | 单位：px<br> 移动端图片之间的间距
 imgsArr | Array | [] | **必填**<br>用于渲染瀑布流的数据<br>每个数组元素是个对象，应该要有src和href属性<br>src属性代表图片的src属性<br>href属性代表点击跳转的链接<br>**如果你的键值不是`src`和`href`，你可以使用`srcKey`和`hrefKey`这两个属性进行键值装换**
 srcKey | String | 'src' | 当你的图片地址键值不为`src`，可以使用该属性进行转换
 hrefKey | String | 'href' | 当你的图片地址键值不为`href`，可以使用该属性进行转换

@@ -1,6 +1,7 @@
 <template lang="pug">
 #app
   a#header(href="https://github.com/lfyfly/vue-waterfall-easy",target="_blank",title="github of vue-waterfall-easy") vue-waterfall-easy
+  //- button(:style="{position:'fixed',zIndex:10000}", @click="changeImgArr") changeImgArr
   #content
     vue-waterfall-easy(:imgsArr="imgsArr",@scrollReachBottom="getData", @click="clickFn")
       .img-info(slot-scope="props")
@@ -36,7 +37,7 @@ export default {
       axios.get('./static/mock/data.json?group=' + this.group) // 真实环境中，后端会根据参数group返回新的图片数组，这里我用一个惊呆json文件模拟
         .then(res => {
           this.imgsArr = this.imgsArr.concat(res.data)
-          group++
+          this.group++
         })
     },
     clickFn(event, { index, value }) {
@@ -44,6 +45,12 @@ export default {
       if (event.target.tagName.toLowerCase() == 'img') {
         console.log('img clicked', index, value)
       }
+    },
+    changeImgArr() {
+      axios.get('./static/mock/data-change.json' ) // 真实环境中，后端会根据参数group返回新的图片数组，这里我用一个惊呆json文件模拟
+        .then(res => {
+          this.imgsArr = res.data
+        })
     }
   },
   created() {
