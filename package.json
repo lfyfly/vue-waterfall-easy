@@ -1,6 +1,6 @@
 {
   "name": "vue-waterfall-easy",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "A waterfall layout component for Vue.js",
   "author": "lfyfly <410793635@qq.com>",
   "main": "./src/vue-waterfall-easy/vue-waterfall-easy.vue",

@@ -93,11 +93,12 @@
         component.img-inner-box(
           :is="isRouterLink? 'router-link' : 'alink'",
           :data-index="i",
-          :to="linkRange=='card' ? v[hrefKey] : 'javascript:void(0)' ")
+          :to="linkRange=='card' ? v[hrefKey] : false")
           component.img-wraper(
+            v-if="v[srcKey]",
             :is="isRouterLink ? 'router-link' :'alink'",
-            :to="linkRange=='img'||linkRange=='card' ? v[hrefKey] : 'javascript:void(0)' ",
-            :style="{width:imgWidth_c+'px',height:v._height?v._height+'px':''}")
+            :to="linkRange=='img' ? v[hrefKey] : false ",
+            :style="{width:imgWidth_c + 'px',height:v._height ? v._height+'px':false}")
             img(:src="v[srcKey]")
           slot(:index="i",:value="v")
 
@@ -247,12 +248,19 @@ export default {
     preload(src, imgIndex) {
       this.imgsArr.forEach((imgItem, imgIndex) => {
         if (imgIndex < this.loadedCount) return // 只对新加载图片进行预加载
+        // 无图时
+        if(!imgItem[this.srcKey]){
+          this.imgsArr[imgIndex]._height ='0'
+          this.loadedCount++
+          return
+        }
         var oImg = new Image()
         oImg.src = imgItem[this.srcKey]
         oImg.onload = oImg.onerror = (e) => {
           this.loadedCount++
           // 预加载图片，计算图片容器的高
-          if (e.type == 'load') this.imgsArr[imgIndex]._height = Math.round(this.imgWidth_c / (oImg.width / oImg.height))
+          this.imgsArr[imgIndex]._height = e.type == 'load' ? Math.round(this.imgWidth_c / (oImg.width / oImg.height)) : '0'
+
           if (this.loadedCount == this.imgsArr.length) {
             this.$emit('preloaded')
           }
