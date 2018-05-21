@@ -74,13 +74,13 @@ export default {
     vueWaterfallEasy
   },
   methods: {
-    getData(group) {
+    getData() {
       // In the real environment,the backend will return a new image array based on the parameter group.
       // Here I simulate it with a stunned json file.
       axios.get('./static/mock/data.json?group=' + this.group)
         .then(res => {
           this.imgsArr = this.imgsArr.concat(res.data)
-          group++
+          this.group++
         })
     },
   },
