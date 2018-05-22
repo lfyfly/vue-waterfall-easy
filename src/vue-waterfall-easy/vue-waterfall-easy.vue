@@ -279,8 +279,6 @@ export default {
     },
     // ==3== waterfall布局
     waterfall() {
-      var scrollEl = this.$el.querySelector('.vue-waterfall-easy-scroll')
-
       // console.log('waterfall')
       var top, left, colWidth = this.isMobile ? this.imgBoxEls[0].offsetWidth : this.colWidth
       if (this.beginIndex == 0) this.colsHeightArr = []
@@ -315,6 +313,7 @@ export default {
         this.cols = this.calcuCols()
         if (old === this.cols) return // 列数不变直接退出
         this.beginIndex = 0 // 开始排列的元素索引
+        if(this.isPreloading_c&&this.isFirstLoad) return
         this.waterfall()
 
       })
@@ -362,6 +361,7 @@ export default {
       this.imgsArr_c = []
       this.beginIndex = 0
       this.loadedCount = 0
+      this.isFirstLoad = true
     }
   }
 }
