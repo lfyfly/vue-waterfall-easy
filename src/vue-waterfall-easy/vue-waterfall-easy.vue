@@ -249,8 +249,8 @@ export default {
       this.imgsArr.forEach((imgItem, imgIndex) => {
         if (imgIndex < this.loadedCount) return // 只对新加载图片进行预加载
         // 无图时
-        if(!imgItem[this.srcKey]){
-          this.imgsArr[imgIndex]._height ='0'
+        if (!imgItem[this.srcKey]) {
+          this.imgsArr[imgIndex]._height = '0'
           this.loadedCount++
           return
         }
@@ -279,12 +279,14 @@ export default {
     },
     // ==3== waterfall布局
     waterfall() {
+      if (!this.imgBoxEls) return
       // console.log('waterfall')
-      var top, left, colWidth = this.isMobile ? this.imgBoxEls[0].offsetWidth : this.colWidth
+      var top, left, height, colWidth = this.isMobile ? this.imgBoxEls[0].offsetWidth : this.colWidth
       if (this.beginIndex == 0) this.colsHeightArr = []
       for (var i = this.beginIndex; i < this.imgsArr.length; i++) {
+        if (!this.imgBoxEls[i]) return
+        height = this.imgBoxEls[i].offsetHeight
         if (i < this.cols) {
-          var height = this.imgBoxEls[i].offsetHeight
           this.colsHeightArr.push(height)
           top = 0
           left = i * colWidth
@@ -295,7 +297,7 @@ export default {
           left = minIndex * colWidth
           // 设置元素定位的位置
           // 更新colsHeightArr
-          this.colsHeightArr[minIndex] = minHeight + this.imgBoxEls[i].offsetHeight
+          this.colsHeightArr[minIndex] = minHeight + height
         }
 
         this.imgBoxEls[i].style.left = left + 'px'
@@ -313,7 +315,6 @@ export default {
         this.cols = this.calcuCols()
         if (old === this.cols) return // 列数不变直接退出
         this.beginIndex = 0 // 开始排列的元素索引
-        if(this.isPreloading_c&&this.isFirstLoad) return
         this.waterfall()
 
       })
@@ -362,6 +363,7 @@ export default {
       this.beginIndex = 0
       this.loadedCount = 0
       this.isFirstLoad = true
+      this.isPreloading = true
     }
   }
 }

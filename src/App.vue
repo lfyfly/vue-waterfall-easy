@@ -1,7 +1,7 @@
 <template lang="pug">
 #app
   a#header(href="https://github.com/lfyfly/vue-waterfall-easy",target="_blank",title="github of vue-waterfall-easy") vue-waterfall-easy
-  //- button(:style="{position:'fixed',zIndex:10000}", @click="changeImgArr") changeImgArr
+  button(:style="{position:'fixed',zIndex:10000}", @click="changeImgArr") changeImgArr
   #content
     vue-waterfall-easy(:imgsArr="imgsArr",@scrollReachBottom="getData", @click="clickFn")
       .img-info(slot-scope="props")
