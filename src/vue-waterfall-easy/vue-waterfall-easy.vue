@@ -91,12 +91,12 @@
         :style="{padding: (isMobile ? mobileGap : gap)/2+'px', width: isMobile ? '' : colWidth+'px'}"
       )
         component.img-inner-box(
-          :is="isRouterLink? 'router-link' : 'alink'",
+          :is="isRouterLink  && linkRange=='card' ? 'router-link' : 'alink'",
           :data-index="i",
           :to="linkRange=='card' ? v[hrefKey] : false")
           component.img-wraper(
             v-if="v[srcKey]",
-            :is="isRouterLink ? 'router-link' :'alink'",
+            :is="isRouterLink && linkRange=='img' ? 'router-link' :'alink'",
             :to="linkRange=='img' ? v[hrefKey] : false ",
             :style="{width:imgWidth_c + 'px',height:v._height ? v._height+'px':false}")
             img(:src="v[srcKey]")
