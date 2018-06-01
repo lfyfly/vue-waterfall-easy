@@ -1,9 +1,10 @@
 {
   "name": "vue-waterfall-easy",
-  "version": "2.1.5",
+  "version": "2.1.6",
   "description": "A waterfall layout component for Vue.js",
   "author": "lfyfly <410793635@qq.com>",
-  "main": "./src/vue-waterfall-easy/vue-waterfall-easy.vue",
+  "main": "./src/vue-waterfall-easy/script/vueWaterfallEasy.js",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/lfyfly/vue-waterfall-easy.git"
@@ -14,15 +15,13 @@
     "build": "node build/build.js",
     "pack": "webpack --config src/vue-waterfall-easy/webpack.config.js"
   },
-  "dependencies": {
+  "devDependencies": {
     "node-sass": "^4.9.0",
     "promise-polyfill": "^7.1.2",
     "pug": "^2.0.3",
     "sass-loader": "^7.0.1",
     "vue": "^2.5.16",
-    "vue-router": "^3.0.1"
-  },
-  "devDependencies": {
+    "vue-router": "^3.0.1",
     "autoprefixer": "^7.1.2",
     "axios": "^0.18.0",
     "babel-core": "^6.22.1",
