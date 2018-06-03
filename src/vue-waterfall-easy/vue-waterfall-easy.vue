@@ -78,7 +78,7 @@
 
 <!-- —————————————↓HTML————————分界线———————————————————————— -->
 <template lang="pug">
-.vue-waterfall-easy-container(:style="{width: width&&!isMobile ? width+'px' : '', height: height?height+'px':''}")
+.vue-waterfall-easy-container(:style="{width: width&&!isMobile ? width+'px' : '', height: parseFloat(height)==height ? height+'px': height }")
   .loading.ball-beat(v-show="isPreloading_c", :class="{first:isFirstLoad}")
     slot(name="loading", :isFirstLoad="isFirstLoad")
     .dot(v-if="!hasLoadingSlot", v-for="n in loadingDotCount",:style="loadingDotStyle")
@@ -118,7 +118,7 @@ export default {
       type: Number
     },
     height: { // 容器高度
-      type: Number
+      type: [Number,String]
     },
     reachBottomDistance: { // 滚动触底距离，触发加载新图片
       type: Number, // selector

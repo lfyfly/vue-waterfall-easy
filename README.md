@@ -94,8 +94,8 @@ export default {
 ## 3. Props
 props | type | default | description
 ---|---|---|---
-width | Number |  - | Container width,default is 100% relative parent element width,**Due to the responsiveness,all its parent's width must be 100% relative to the browser window at this time**,See the example after the table<br>**If it is fixed width, you must set the width prop **, not just its parent element set fixed width
-height | Number | - | Container height,default is 100% relative parent element height<br>**The parent element must have a height when the height prop is not passed**
+width | Number |  - | Container width（px）,default is 100% relative parent element width,**Due to the responsiveness,all its parent's width must be 100% relative to the browser window at this time**,See the example after the table<br>**If it is fixed width, you must set the width prop **, not just its parent element set fixed width
+height | Number\|String | - | Container height, the default unit `px` for the value of the `Number` type, the unit can be specified when the value is the type of `String`<br>**When you do not specify the `height` value, the default is relative to the height of the parent element 100%, then the parent element must have a height**
 gap | Number | 20 | [Pc] space between pictures(px)
 mobileGap | Number | 8 | [Mobile] space between pictures(px)
 imgsArr | Array | [] | **required**<br>Data used to render the waterfall stream<br>Each array element is an object and must have `src` and `href` attributes.<br>The `src` attribute represents the SRC attribute of the picture<br>The `href` attribute represents the link to click to jump <br>**if your key is not `src` and `href`, you can use the two properties of `srcKey` and `hrefKey` to do the key value replacement.**
