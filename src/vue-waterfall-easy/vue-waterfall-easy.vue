@@ -10,6 +10,7 @@
     height: 100%;
     overflow-x: hidden;
     overflow-y: scroll;
+    -webkit-overflow-scrolling:touch;
   }
   .vue-waterfall-easy {
     position: absolute;
