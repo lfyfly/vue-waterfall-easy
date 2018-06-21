@@ -342,7 +342,7 @@ export default {
         if (old === this.cols) return // 列数不变直接退出
         this.beginIndex = 0 // 开始排列的元素索引
         this.waterfall()
-
+        if(this.over) this.setOverTipPos()
       })
     },
 
@@ -364,6 +364,9 @@ export default {
       this.$refs.scrollEl.removeEventListener('scroll', this.scrollFn)
       this.isPreloading = false
       this.over = true
+      this.setOverTipPos()
+    },
+    setOverTipPos() {
       var maxHeight = Math.max.apply(null, this.colsHeightArr)
       this.$nextTick(() => {
         this.$refs.over.style.top = maxHeight + 'px'
