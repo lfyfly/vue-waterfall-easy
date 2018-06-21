@@ -109,8 +109,7 @@ reachBottomDistance | Number | 0 | The distance(px) from the bottom of the conta
 loadingDotCount | Number | 3 | The number of default loading animation dots
 loadingDotStyle | Object | null | The style object of the small dots in the default loading element
 loadingTimeOut | Number | 500 |  Preloading events less than 500ms milliseconds do not display loading animations,increasing the user experience
-
-
+cardAnimationClass | String | 'default-card-animation' | the animation className for the card
 
 
 ## 4. Event

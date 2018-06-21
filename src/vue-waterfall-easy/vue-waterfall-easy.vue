@@ -24,12 +24,14 @@
       }
     }
     & > .img-box {
-      animation: show-card 0.4s;
       position: absolute;
       box-sizing: border-box;
+      width: 50%; // 移动端生效
+    }
+    & > .img-box.default-card-animation {
+      animation: show-card 0.4s;
       transition: left 0.6s, top 0.6s;
       transition-delay: 0.1s;
-      width: 50%; // 移动端生效
     }
     a {
       display: block;
@@ -107,6 +109,7 @@
     .vue-waterfall-easy(:style="isMobile? '' :{width: colWidth*cols+'px',left:'50%', marginLeft: -1*colWidth*cols/2 +'px'}")
       .img-box(
         v-for="(v,i) in imgsArr_c",
+        :class="[cardAnimationClass]"
         :style="{padding: (isMobile ? mobileGap : gap)/2+'px', width: isMobile ? '' : colWidth+'px'}"
       )
         component.img-inner-box(
@@ -190,6 +193,10 @@ export default {
     loadingTimeOut: { // 预加载事件小于500毫秒就不显示加载动画，增加用户体验
       type: Number,
       default: 500
+    },
+    cardAnimationClass: {
+      type: [String],
+      default: 'default-card-animation'
     }
   },
   data() {
@@ -358,7 +365,7 @@ export default {
       this.isPreloading = false
       this.over = true
       var maxHeight = Math.max.apply(null, this.colsHeightArr)
-      this.$nextTick(()=>{
+      this.$nextTick(() => {
         this.$refs.over.style.top = maxHeight + 'px'
       })
     },

@@ -106,7 +106,7 @@ reachBottomDistance | Number | 0 | 单位：px<br>滚动触发scrollReachBottom�
 loadingDotCount | Number | 3 | 默认loading动画点的数量
 loadingDotStyle | Object | null | 默认loading动画内小圆点的样式对象，可以自定义其样式
 loadingTimeOut | Number | 500 | 单位：ms<br> 预加载事件小于500毫秒就不显示加载动画，增加用户体验
-
+cardAnimationClass | String | 'default-card-animation' | 用于给图片设置出现时的动画的calssName，如要去掉默认动画可以这样设置`cardAnimationClass=""`
 ### waterfall组件祖先元素css样式
 [详情见 App.vue 文件](https://github.com/lfyfly/vue-waterfall-easy/blob/master/src/App.vue)
 ```
