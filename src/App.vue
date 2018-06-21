@@ -3,7 +3,7 @@
   a#header(href="https://github.com/lfyfly/vue-waterfall-easy",target="_blank",title="github of vue-waterfall-easy") vue-waterfall-easy
   button(:style="{position:'fixed',zIndex:10000}", @click="changeImgArr") changeImgArr
   #content
-    vue-waterfall-easy(:imgsArr="imgsArr",@scrollReachBottom="getData", @click="clickFn")
+    vue-waterfall-easy(ref="waterfall",:imgsArr="imgsArr",@scrollReachBottom="getData", @click="clickFn")
       .img-info(slot-scope="props")
         p.some-info 第{{props.index+1}}张图片
         p.some-info {{props.value.info}}
@@ -36,8 +36,12 @@ export default {
     getData() {
       axios.get('./static/mock/data.json?group=' + this.group) // 真实环境中，后端会根据参数group返回新的图片数组，这里我用一个惊呆json文件模拟
         .then(res => {
-          this.imgsArr = this.imgsArr.concat(res.data)
           this.group++
+          if(this.group ===10) { // 模拟已经无新数据，显示 slot="waterfall-over"
+            this.$refs.waterfall.waterfallOver()
+            return
+          }
+          this.imgsArr = this.imgsArr.concat(res.data)
         })
     },
     clickFn(event, { index, value }) {

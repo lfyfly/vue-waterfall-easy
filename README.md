@@ -134,9 +134,15 @@ click event demo
     }
   }
 ```
-
-## 5. slot
-### 5.1 default slot
+## 5. methods
+### 5.1 waterfallOver
+When the rolling load data is over, manual invoking will remove the scroll event.
+```
+this.$refs.waterfall.waterfallOver()
+```
+[more detail see App.vue](https://github.com/lfyfly/vue-waterfall-easy/blob/master/src/App.vue)
+## 6. slot
+### 6.1 default slot
 Custom picture description element
 #### parameter
 parameterpar | description
@@ -152,7 +158,7 @@ props.value | The value of imgsArr item
   </div>
 </vue-waterfall-easy>
 ```
-### 5.2 slot="loading"
+### 6.2 slot="loading"
 Custom loading element
 ```html
 <div slot="loading" slot-scope="{isFirstLoad}">
@@ -160,7 +166,7 @@ Custom loading element
   <div v-else="v-else">loading...</div>
 </div>
 ```
-### 5.3 slot="waterfall-head"
+### 6.3 slot="waterfall-head"
 Waterfall container head slot
 ```html
 <vue-waterfall-easy :imgsArr="imgsArr" @scrollReachBottom="getData">
@@ -170,7 +176,7 @@ Waterfall container head slot
 
 
 
-## 6. Adapted mobile
+## 7. Adapted mobile
 Don't forget to add following  code in index.html \<head\>
 ```html
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">

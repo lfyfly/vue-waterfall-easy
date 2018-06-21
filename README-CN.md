@@ -140,9 +140,15 @@ click事件使用实例
     }
   }
 ```
-
-## 5. slot插槽
-### 5.1 默认slot
+## 5. 组件方法
+### 5.1 waterfallOver
+当滚动加载数据结束时，手动调用，将会取消滚动加载
+```
+this.$refs.waterfall.waterfallOver()
+```
+[详情见仓库App.vue文件](https://github.com/lfyfly/vue-waterfall-easy/blob/master/src/App.vue)
+## 6. slot插槽
+### 6.1 默认slot
 进行自定义图片的描述信息
 #### 参数说明
 参数 | 描述
@@ -158,7 +164,7 @@ props.value | 遍历参数imgsArr的元素值
   </div>
 </vue-waterfall-easy>
 ```
-### 5.2 slot="loading"
+### 6.2 slot="loading"
 自定义加载动画
 ```html
 <div slot="loading" slot-scope="{isFirstLoad}">
@@ -166,7 +172,7 @@ props.value | 遍历参数imgsArr的元素值
   <div v-else="v-else">loading...</div>
 </div>
 ```
-### 5.3 slot="waterfall-head"
+### 6.3 slot="waterfall-head"
 容器头部内容插槽
 ```html
 <vue-waterfall-easy :imgsArr="imgsArr" @scrollReachBottom="getData">
@@ -174,9 +180,15 @@ props.value | 遍历参数imgsArr的元素值
 </vue-waterfall-easy>
 ```
 
+### 6.4 slot="waterfall-over"
+调用`waterfallOver`方法后才会显示，用于瀑布流结束提醒，默认值是`被你看光了`
+```html
+<vue-waterfall-easy :imgsArr="imgsArr" @scrollReachBottom="getData">
+  <div slot="waterfall-over">waterfall-over</div>
+</vue-waterfall-easy>
+```
 
-
-## 6. 兼容移动端
+## 7. 兼容移动端
 别忘记在index.html head中添加一下代码
 ```html
 <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
