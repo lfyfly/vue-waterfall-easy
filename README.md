@@ -172,7 +172,13 @@ Waterfall container head slot
   <div slot="waterfall-head">waterfall-head</div>
 </vue-waterfall-easy>
 ```
-
+### 6.4 slot="waterfall-over"
+when `waterfallOver` method is called，this slot will show
+```html
+<vue-waterfall-easy :imgsArr="imgsArr" @scrollReachBottom="getData">
+  <div slot="waterfall-over">waterfall-over</div>
+</vue-waterfall-easy>
+```
 
 
 ## 7. Adapted mobile
