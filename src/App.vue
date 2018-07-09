@@ -37,7 +37,7 @@ export default {
       axios.get('./static/mock/data.json?group=' + this.group) // 真实环境中，后端会根据参数group返回新的图片数组，这里我用一个惊呆json文件模拟
         .then(res => {
           this.group++
-          if(this.group ===10) { // 模拟已经无新数据，显示 slot="waterfall-over"
+          if (this.group === 10) { // 模拟已经无新数据，显示 slot="waterfall-over"
             this.$refs.waterfall.waterfallOver()
             return
           }
@@ -51,7 +51,7 @@ export default {
       }
     },
     changeImgArr() {
-      axios.get('./static/mock/data-change.json' ) // 真实环境中，后端会根据参数group返回新的图片数组，这里我用一个惊呆json文件模拟
+      axios.get('./static/mock/data-change.json') // 真实环境中，后端会根据参数group返回新的图片数组，这里我用一个惊呆json文件模拟
         .then(res => {
           this.imgsArr = res.data
         })
@@ -68,6 +68,7 @@ export default {
   margin: 0;
   padding: 0;
 }
+
 a {
   color: #000;
   text-decoration: none;
@@ -103,7 +104,9 @@ body,
     width: 100%;
   }
 }
-
+// .__err__ .img-wraper {
+//   background: url(/static/img/1.jpg) no-repeat center/100px 100px !important;
+// }
 #app {
   overflow: auto;
   position: relative;
