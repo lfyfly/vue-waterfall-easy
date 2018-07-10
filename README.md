@@ -110,7 +110,7 @@ loadingDotCount | Number | 3 | The number of default loading animation dots
 loadingDotStyle | Object | null | The style object of the small dots in the default loading element
 loadingTimeOut | Number | 500 |  Preloading events less than 500ms milliseconds do not display loading animations,increasing the user experience
 cardAnimationClass | String | 'default-card-animation' | the animation className for the card
-
+enablePullDownEvent | Boolean | false | enable the drop-down event
 
 ## 4. Event
 event name | description
@@ -118,7 +118,8 @@ event name | description
 scrollReachBottom | When the scroll bar scrolls to the bottom,it is used to trigger a request for new image data
 preloaded | Trigger every time image preloading is completed
 click | Trigger when the card is clicked,look at an example under the table
-
+pullDownMove | The mobile terminal takes effect, touches the pull-down event, and the first parameter can obtain the Y-axis moving distance difference, which is often used for pull-down refresh.
+pullDownEnd | The mobile terminal takes effect, and the touch pull-down event is raised by the finger, which is often used for pull-down refresh.
 click event demo
 ```html
 <vue-waterfall-easy :imgsArr="imgsArr" @scrollReachBottom="getData" @click="clickFn"></vue-waterfall-easy>

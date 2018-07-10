@@ -205,6 +205,10 @@ export default {
     cardAnimationClass: {
       type: [String],
       default: 'default-card-animation'
+    },
+    enablePullDownEvent: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
@@ -255,6 +259,7 @@ export default {
 
     })
     if (!this.isMobile && !this.width) this.response()
+    if (this.isMobile&&this.enablePullDownEvent) this.pullDown()
     this.scroll()
   },
   watch: {
@@ -398,6 +403,30 @@ export default {
             value: this.imgsArr_c[index],
           })
         })
+    },
+    // ==7== 下拉事件
+    pullDown() {
+      var scrollEl = this.$el.querySelector('.vue-waterfall-easy-scroll')
+      var startY
+      scrollEl.addEventListener('touchmove', (e) => {
+
+        if (scrollEl.scrollTop === 0) {
+          var t = e.changedTouches[0]
+          if (!startY) startY = t.pageY
+          var pullDownDistance = t.pageY - startY
+          if (pullDownDistance >= 0) {
+            e.preventDefault()
+          }
+          this.$emit('pullDownMove', pullDownDistance)
+        }
+      })
+      scrollEl.addEventListener('touchend', (e) => {
+        if (scrollEl.scrollTop === 0) {
+          startY = NaN
+          this.$emit('pullDownEnd')
+        }
+      })
+
     },
     // other
     loadingMiddle() {

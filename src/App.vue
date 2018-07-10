@@ -3,7 +3,7 @@
   a#header(href="https://github.com/lfyfly/vue-waterfall-easy",target="_blank",title="github of vue-waterfall-easy") vue-waterfall-easy
   button(:style="{position:'fixed',zIndex:10000}", @click="changeImgArr") changeImgArr
   #content
-    vue-waterfall-easy(ref="waterfall",:imgsArr="imgsArr",@scrollReachBottom="getData", @click="clickFn")
+    vue-waterfall-easy(ref="waterfall",:imgsArr="imgsArr",@scrollReachBottom="getData", @click="clickFn", :enablePullDownEvent="true", @pullDownMove="pullDownMove",@pullDownEnd="pullDownEnd")
       .img-info(slot-scope="props")
         p.some-info 第{{props.index+1}}张图片
         p.some-info {{props.value.info}}
@@ -55,7 +55,13 @@ export default {
         .then(res => {
           this.imgsArr = res.data
         })
-    }
+    },
+    pullDownMove(pullDownDistance) {
+      console.log('pullDownDistance', pullDownDistance)
+    },
+    pullDownEnd(pullDownDistance) {
+      console.log('pullDownEnd')
+    },
   },
   created() {
     this.getData()

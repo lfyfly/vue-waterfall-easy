@@ -107,6 +107,7 @@ loadingDotCount | Number | 3 | 默认loading动画点的数量
 loadingDotStyle | Object | null | 默认loading动画内小圆点的样式对象，可以自定义其样式
 loadingTimeOut | Number | 500 | 单位：ms<br> 预加载事件小于500毫秒就不显示加载动画，增加用户体验
 cardAnimationClass | String | 'default-card-animation' | 用于给图片设置出现时的动画的calssName，如要去掉默认动画可以这样设置`cardAnimationClass=""`
+enablePullDownEvent | Boolean | false | 开启下拉事件
 ### waterfall组件祖先元素css样式
 [详情见 App.vue 文件](https://github.com/lfyfly/vue-waterfall-easy/blob/master/src/App.vue)
 ```
@@ -125,6 +126,8 @@ body,
 scrollReachBottom | 滚动条滚动到底部时,用于请求新的图片数据
 preloaded | 每次图片预加载完成执行
 click | 当卡片被点击时触发，看下面的实例
+pullDownMove | 移动端生效，触摸下拉事件，第一个参数可获取Y轴移动距离差，常用于下拉刷新
+pullDownEnd | 移动端生效，触摸下拉事件手指抬起，常用于下拉刷新
 
 click事件使用实例
 ```html
