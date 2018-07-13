@@ -414,7 +414,7 @@ export default {
           var t = e.changedTouches[0]
           if (!startY) startY = t.pageY
           var pullDownDistance = t.pageY - startY
-          if (pullDownDistance >= 0) {
+          if (pullDownDistance > 0) {
             e.preventDefault()
           }
           this.$emit('pullDownMove', pullDownDistance)

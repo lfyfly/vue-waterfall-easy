@@ -3,7 +3,8 @@
   a#header(href="https://github.com/lfyfly/vue-waterfall-easy",target="_blank",title="github of vue-waterfall-easy") vue-waterfall-easy
   button(:style="{position:'fixed',zIndex:10000}", @click="changeImgArr") changeImgArr
   #content
-    vue-waterfall-easy(ref="waterfall",:imgsArr="imgsArr",@scrollReachBottom="getData", @click="clickFn", :enablePullDownEvent="true", @pullDownMove="pullDownMove",@pullDownEnd="pullDownEnd")
+    //- vue-waterfall-easy(ref="waterfall",:imgsArr="imgsArr",@scrollReachBottom="getData", @click="clickFn", :enablePullDownEvent="true", @pullDownMove="pullDownMove",@pullDownEnd="pullDownEnd")
+    vue-waterfall-easy(ref="waterfall",:imgsArr="imgsArr",@scrollReachBottom="getData", @click="clickFn")
       .img-info(slot-scope="props")
         p.some-info 第{{props.index+1}}张图片
         p.some-info {{props.value.info}}
@@ -27,6 +28,7 @@ export default {
     return {
       imgsArr: [],
       group: 0, // 当前加载的加载图片的次数
+      pullDownDistance: 0
     }
   },
   components: {
@@ -57,10 +59,15 @@ export default {
         })
     },
     pullDownMove(pullDownDistance) {
-      console.log('pullDownDistance', pullDownDistance)
+      // console.log('pullDownDistance', pullDownDistance)
+      this.pullDownDistance = pullDownDistance
     },
     pullDownEnd(pullDownDistance) {
       console.log('pullDownEnd')
+      if(this.pullDownDistance>50){
+        alert('下拉刷新')
+      }
+      this.pullDownDistance = 0
     },
   },
   created() {
