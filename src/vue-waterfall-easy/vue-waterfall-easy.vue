@@ -153,7 +153,7 @@ export default {
     },
     reachBottomDistance: { // 滚动触底距离，触发加载新图片
       type: Number, // selector
-      default: 0  // 默认在最低那一列到底时触发
+      default: 20  // 默认在最低那一列到底时触发
     },
     loadingDotCount: { // loading 点数
       type: Number,
@@ -393,7 +393,8 @@ export default {
       this.$el.querySelector(".vue-waterfall-easy")
         .addEventListener('click', e => {
           var targetEl = e.target;
-          if (targetEl.className.indexOf("img-box") != -1) return;
+          if(e.target.className.indexOf('over')!==-1) return
+          if (targetEl.className.indexOf("img-box") != -1) return
           while (targetEl.className.indexOf("img-inner-box") == -1) {
             targetEl = targetEl.parentNode;
           }
