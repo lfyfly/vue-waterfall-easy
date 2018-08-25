@@ -308,6 +308,7 @@ export default {
           this.imgsArr[imgIndex]._height = e.type == 'load' ? Math.round(this.imgWidth_c / (oImg.width / oImg.height)) : (this.isMobile ? this.imgWidth_c : this.imgWidth)
           if (e.type == 'error') {
             this.imgsArr[imgIndex]._error = true
+            this.$emit('imgError',this.imgsArr[imgIndex])
           }
 
           if (this.loadedCount == this.imgsArr.length) {

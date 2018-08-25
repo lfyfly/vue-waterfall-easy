@@ -118,6 +118,7 @@ event name | description
 scrollReachBottom | When the scroll bar scrolls to the bottom,it is used to trigger a request for new image data
 preloaded | Trigger every time image preloading is completed
 click | Trigger when the card is clicked,look at an example under the table
+imgError | Trigger when img load error
 pullDownMove | The mobile terminal takes effect, touches the pull-down event, and the first parameter can obtain the Y-axis moving distance difference, which is often used for pull-down refresh.
 pullDownEnd | The mobile terminal takes effect, and the touch pull-down event is raised by the finger, which is often used for pull-down refresh.
 click event demo
