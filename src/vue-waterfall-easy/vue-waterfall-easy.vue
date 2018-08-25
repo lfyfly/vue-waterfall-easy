@@ -291,11 +291,18 @@ export default {
         if (!imgItem[this.srcKey]) {
           this.imgsArr[imgIndex]._height = '0'
           this.loadedCount++
+
+          // 支持无图模式
+           if (this.loadedCount == this.imgsArr.length) {
+            this.$emit('preloaded')
+          }
           return
         }
+
         var oImg = new Image()
         oImg.src = imgItem[this.srcKey]
         oImg.onload = oImg.onerror = (e) => {
+
           this.loadedCount++
           // 预加载图片，计算图片容器的高
           this.imgsArr[imgIndex]._height = e.type == 'load' ? Math.round(this.imgWidth_c / (oImg.width / oImg.height)) : (this.isMobile ? this.imgWidth_c : this.imgWidth)

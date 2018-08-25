@@ -3,7 +3,8 @@
 2. 相比其他实现方式，无需在返回的数据中指定图片的宽度和高度
 3. 正是因为第2条，所以采用的是图片预加载之后，再排版
 4. 响应式，兼容移动端
-5. 使用及其简单
+5. 支持无图模式(@2.4.0)
+6. 使用及其简单
 
 ## [在线DEMO](https://lfyfly.github.io/vue-waterfall-easy/demo/)
 ## [Demo案例代码](https://github.com/lfyfly/vue-waterfall-easy/blob/master/src/App.vue)
