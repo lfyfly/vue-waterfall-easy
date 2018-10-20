@@ -36,7 +36,7 @@ export default {
   },
   methods: {
     getData() {
-      axios.get('./static/mock/data.json?group=' + this.group) // 真实环境中，后端会根据参数group返回新的图片数组，这里我用一个惊呆json文件模拟
+      axios.get('./static/mock/data.json?group=' + this.group) // 真实环境中，后端会根据参数group返回新的图片数组，这里我用一个静态json文件模拟
         .then(res => {
           this.group++
           if (this.group === 10) { // 模拟已经无新数据，显示 slot="waterfall-over"
@@ -56,7 +56,7 @@ export default {
       console.log('图片加载错误',imgItem)
     },
     changeImgArr() {
-      axios.get('./static/mock/data-change.json') // 真实环境中，后端会根据参数group返回新的图片数组，这里我用一个惊呆json文件模拟
+      axios.get('./static/mock/data-change.json') // 真实环境中，后端会根据参数group返回新的图片数组，这里我用一个静态json文件模拟
         .then(res => {
           this.imgsArr = res.data
         })
