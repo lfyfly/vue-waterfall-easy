@@ -259,7 +259,7 @@ export default {
 
     })
     if (!this.isMobile && !this.width) this.response()
-    if (this.isMobile&&this.enablePullDownEvent) this.pullDown()
+    if (this.isMobile && this.enablePullDownEvent) this.pullDown()
     this.scroll()
   },
   watch: {
@@ -274,7 +274,7 @@ export default {
       }
     },
     imgsArr(newV, oldV) {
-      if (oldV.length > 0 && newV[0] && !newV[0]._height) {
+      if (this.imgsArr_c.length !== newV.length || (this.imgsArr_c.length > 0 && newV[0] && !newV[0]._height)) {
         // console.log('reset')
         this.reset()
       }
@@ -293,7 +293,7 @@ export default {
           this.loadedCount++
 
           // 支持无图模式
-           if (this.loadedCount == this.imgsArr.length) {
+          if (this.loadedCount == this.imgsArr.length) {
             this.$emit('preloaded')
           }
           return
@@ -308,7 +308,7 @@ export default {
           this.imgsArr[imgIndex]._height = e.type == 'load' ? Math.round(this.imgWidth_c / (oImg.width / oImg.height)) : (this.isMobile ? this.imgWidth_c : this.imgWidth)
           if (e.type == 'error') {
             this.imgsArr[imgIndex]._error = true
-            this.$emit('imgError',this.imgsArr[imgIndex])
+            this.$emit('imgError', this.imgsArr[imgIndex])
           }
 
           if (this.loadedCount == this.imgsArr.length) {
@@ -401,7 +401,7 @@ export default {
       this.$el.querySelector(".vue-waterfall-easy")
         .addEventListener('click', e => {
           var targetEl = e.target;
-          if(e.target.className.indexOf('over')!==-1) return
+          if (e.target.className.indexOf('over') !== -1) return
           if (targetEl.className.indexOf("img-box") != -1) return
           while (targetEl.className.indexOf("img-inner-box") == -1) {
             targetEl = targetEl.parentNode;

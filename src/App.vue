@@ -75,6 +75,11 @@ export default {
   },
   created() {
     this.getData()
+
+    // 删除某个卡片
+    // setTimeout(()=>{
+    //   this.imgsArr.splice(1,1)
+    // },2000)
   },
 }
 </script>
