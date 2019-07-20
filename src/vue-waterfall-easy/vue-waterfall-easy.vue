@@ -258,9 +258,12 @@ export default {
       })
 
     })
-    if (!this.isMobile && !this.width) this.response()
+    if (!this.isMobile && !this.width) window.addEventListener('resize', this.response)
     if (this.isMobile && this.enablePullDownEvent) this.pullDown()
     this.scroll()
+  },
+  beforeDestroy() {
+    window.removeEventListener('resize', this.response)
   },
   watch: {
     isPreloading(newV, oldV) {
@@ -360,14 +363,12 @@ export default {
 
     // ==4== resize 响应式
     response() {
-      window.addEventListener('resize', () => {
-        var old = this.cols
-        this.cols = this.calcuCols()
-        if (old === this.cols) return // 列数不变直接退出
-        this.beginIndex = 0 // 开始排列的元素索引
-        this.waterfall()
-        if (this.over) this.setOverTipPos()
-      })
+      var old = this.cols
+      this.cols = this.calcuCols()
+      if (old === this.cols) return // 列数不变直接退出
+      this.beginIndex = 0 // 开始排列的元素索引
+      this.waterfall()
+      if (this.over) this.setOverTipPos()
     },
 
     // ==5== 滚动触底事件
