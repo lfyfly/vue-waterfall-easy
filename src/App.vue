@@ -2,6 +2,9 @@
 #app
   a#header(href="https://github.com/lfyfly/vue-waterfall-easy",target="_blank",title="github of vue-waterfall-easy") vue-waterfall-easy
   button(:style="{position:'fixed',zIndex:10000}", @click="changeImgArr") changeImgArr
+  a.typetype(href="https://typetype.top", target="_blank")
+    button(:style="{position:'fixed',zIndex:10000, left: '120px'}") Improve typing speed
+    
   #content
     //- vue-waterfall-easy(ref="waterfall",:imgsArr="imgsArr",@scrollReachBottom="getData", @click="clickFn", :enablePullDownEvent="true", @pullDownMove="pullDownMove",@pullDownEnd="pullDownEnd")
     vue-waterfall-easy(ref="waterfall",:imgsArr="imgsArr",@scrollReachBottom="getData", @click="clickFn", @imgError="imgErrorFn")
@@ -96,13 +99,18 @@ a {
   &:active {
     color: #000;
   }
+ 
 }
 html,
 body,
 #app {
   height: 100%;
 }
-
+.typetype button{
+  cursor: pointer;
+  font-size: 18px;
+  padding: 0 10px;
+}
 #app {
   position: relative;
   #header {
