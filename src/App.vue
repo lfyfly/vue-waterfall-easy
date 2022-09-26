@@ -2,8 +2,8 @@
 #app
   a#header(href="https://github.com/lfyfly/vue-waterfall-easy",target="_blank",title="github of vue-waterfall-easy") vue-waterfall-easy
   button(:style="{position:'fixed',zIndex:10000}", @click="changeImgArr") changeImgArr
-  a.typetype(href="https://typetype.top", target="_blank")
-    button(:style="{position:'fixed',zIndex:10000, left: '120px'}") Improve typing speed
+  a.typetype(href="https://dazidazi.com", target="_blank")
+    button(:style="{position:'fixed',zIndex:10000, left: '120px'}") 程序员提高打字速度
     
   #content
     //- vue-waterfall-easy(ref="waterfall",:imgsArr="imgsArr",@scrollReachBottom="getData", @click="clickFn", :enablePullDownEvent="true", @pullDownMove="pullDownMove",@pullDownEnd="pullDownEnd")
